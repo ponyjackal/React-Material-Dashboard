@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
-import { RouteWithLayout } from './components';
+import { RouteWithLayout, PrivateRouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
@@ -23,45 +23,45 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/dashboard"
+        to="/sign-in"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={DashboardView}
         exact
         layout={MainLayout}
         path="/dashboard"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={UserListView}
         exact
         layout={MainLayout}
         path="/users"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={ProductListView}
         exact
         layout={MainLayout}
         path="/products"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={TypographyView}
         exact
         layout={MainLayout}
         path="/typography"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={IconsView}
         exact
         layout={MainLayout}
         path="/icons"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={AccountView}
         exact
         layout={MainLayout}
         path="/account"
       />
-      <RouteWithLayout
+      <PrivateRouteWithLayout
         component={SettingsView}
         exact
         layout={MainLayout}

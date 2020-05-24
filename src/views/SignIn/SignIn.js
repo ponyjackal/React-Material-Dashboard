@@ -6,14 +6,16 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   Button,
-  IconButton,
+  // IconButton,
   TextField,
   Link,
   Typography
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
+// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
+
+import { signin } from './../../redux/auth/actions';
+import useActions from './../../lib/useActions';
 
 const schema = {
   email: {
@@ -127,8 +129,12 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = props => {
   const { history } = props;
-
   const classes = useStyles();
+
+  const [onSignIn] = useActions(
+    [signin],
+    []
+  )
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -147,9 +153,9 @@ const SignIn = props => {
     }));
   }, [formState.values]);
 
-  const handleBack = () => {
-    history.goBack();
-  };
+  // const handleBack = () => {
+  //   history.goBack();
+  // };
 
   const handleChange = event => {
     event.persist();
@@ -172,7 +178,11 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    history.push('/');
+    onSignIn({
+      email: formState.values.email,
+      password: formState.values.password,
+    });
+    history.push('/dashboard');
   };
 
   const hasError = field =>
@@ -223,9 +233,9 @@ const SignIn = props => {
         >
           <div className={classes.content}>
             <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
+              {/* <IconButton onClick={handleBack}>
                 <ArrowBackIcon />
-              </IconButton>
+              </IconButton> */}
             </div>
             <div className={classes.contentBody}>
               <form
