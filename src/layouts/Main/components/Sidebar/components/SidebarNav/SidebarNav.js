@@ -1,16 +1,18 @@
-/* eslint-disable react/no-multi-comp */
-/* eslint-disable react/display-name */
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, colors } from '@material-ui/core';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles(theme => ({
   root: {},
   item: {
-    display: 'flex',
+    display: 'inline-block',
     paddingTop: 0,
     paddingBottom: 0
   },
@@ -37,7 +39,10 @@ const useStyles = makeStyles(theme => ({
     '& $icon': {
       color: theme.palette.primary.main
     }
-  }
+  },
+  chileItem: {
+    marginLeft: '30px',
+  },
 }));
 
 const CustomRouterLink = forwardRef((props, ref) => (
@@ -51,8 +56,34 @@ const CustomRouterLink = forwardRef((props, ref) => (
 
 const SidebarNav = props => {
   const { pages, className, ...rest } = props;
-
+  const [collapsed, setCollapsed] = React.useState(true);
   const classes = useStyles();
+
+  function toggleCollapse() {
+    setCollapsed(prevValue => !prevValue);
+  }
+  function onClick(e) {
+    if (Array.isArray(pages)) {
+      e.preventDefault();
+      toggleCollapse();
+    }
+  }
+
+  let expandIcon;
+
+  if (Array.isArray(pages) && pages.length) {
+    expandIcon = !collapsed ? (
+      <ExpandMoreIcon
+        className={
+          "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
+        }
+
+        style={{ marginLeft: '80px', }}
+      />
+    ) : (
+        <KeyboardArrowRightIcon className="sidebar-item-expand-arrow" style={{ marginLeft: '80px', }} />
+      );
+  }
 
   return (
     <List
@@ -60,21 +91,56 @@ const SidebarNav = props => {
       className={clsx(classes.root, className)}
     >
       {pages.map(page => (
-        <ListItem
-          className={classes.item}
-          disableGutters
-          key={page.title}
-        >
-          <Button
-            activeClassName={classes.active}
-            className={classes.button}
-            component={CustomRouterLink}
-            to={page.href}
+        <React.Fragment key={page.title}>
+          <ListItem
+            className={classes.item}
+            disableGutters
+            key={page.title}
           >
-            <div className={classes.icon}>{page.icon}</div>
-            {page.title}
-          </Button>
-        </ListItem>
+            {Array.isArray(page.items) ? (
+              <Button
+                // activeClassName={classes.active}
+                className={classes.button}
+                onClick={onClick}
+              >
+                <div className={classes.icon}>{page.icon}</div>
+                {page.title}
+                {expandIcon}
+              </Button>
+            ) : (
+                <Button
+                  activeClassName={classes.active}
+                  className={classes.button}
+                  component={CustomRouterLink}
+                  to={page.href}
+                >
+                  <div className={classes.icon}>{page.icon}</div>
+                  {page.title}
+                </Button>
+              )}
+
+
+            <Collapse in={!collapsed} timeout="auto" unmountOnExit>
+              {Array.isArray(page.items) ? (
+                <List disablePadding {...rest} className={classes.chileItem}>
+                  {page.items.map((subItem) => (
+                    <ListItem key={subItem.title} className={classes.item} disableGutters>
+                      <Button
+                        activeClassName={classes.active}
+                        className={classes.button}
+                        component={CustomRouterLink}
+                        to={subItem.href}
+                      >
+                        <div className={classes.icon}>{subItem.icon}</div>
+                        {subItem.title}
+                      </Button>
+                    </ListItem>
+                  ))}
+                </List>
+              ) : null}
+            </Collapse>
+          </ListItem>
+        </React.Fragment>
       ))}
     </List>
   );

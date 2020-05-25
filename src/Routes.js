@@ -14,7 +14,9 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  CreateBroadcast as CreateBroadcastView,
+  ScheduledBroadcast as ScheduledBroadcastView
 } from './views';
 
 const Routes = () => {
@@ -23,13 +25,25 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/sign-in"
+        to="/dashboard"
       />
       <PrivateRouteWithLayout
         component={DashboardView}
         exact
         layout={MainLayout}
         path="/dashboard"
+      />
+      <PrivateRouteWithLayout
+        component={CreateBroadcastView}
+        exact
+        layout={MainLayout}
+        path="/create"
+      />
+      <PrivateRouteWithLayout
+        component={ScheduledBroadcastView}
+        exact
+        layout={MainLayout}
+        path="/scheduled"
       />
       <PrivateRouteWithLayout
         component={UserListView}

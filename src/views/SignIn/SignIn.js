@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -6,12 +7,12 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   Button,
-  // IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
 import { signin } from './../../redux/auth/actions';
@@ -124,6 +125,9 @@ const useStyles = makeStyles(theme => ({
   },
   signInButton: {
     margin: theme.spacing(2, 0)
+  },
+  circularProgress: {
+
   }
 }));
 
@@ -131,6 +135,8 @@ const SignIn = props => {
   const { history } = props;
   const classes = useStyles();
 
+  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
+  const isLoading = useSelector(({ loading }) => loading.SIGNIN);
   const [onSignIn] = useActions(
     [signin],
     []
@@ -153,9 +159,16 @@ const SignIn = props => {
     }));
   }, [formState.values]);
 
-  // const handleBack = () => {
-  //   history.goBack();
-  // };
+  useEffect(() => {
+    if (isAuthenticated) {
+      history.push('/');
+      try {
+        localStorage.setItem('isAuthenticated', isAuthenticated);
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
+    }
+  }, [history, isAuthenticated]);
 
   const handleChange = event => {
     event.persist();
@@ -182,7 +195,6 @@ const SignIn = props => {
       email: formState.values.email,
       password: formState.values.password,
     });
-    history.push('/dashboard');
   };
 
   const hasError = field =>
@@ -326,7 +338,9 @@ const SignIn = props => {
                   type="submit"
                   variant="contained"
                 >
-                  Sign in now
+                  {isLoading
+                    ? <CircularProgress color="inherit" size={26} />
+                    : <>Sign in now</>}
                 </Button>
                 <Typography
                   color="textSecondary"

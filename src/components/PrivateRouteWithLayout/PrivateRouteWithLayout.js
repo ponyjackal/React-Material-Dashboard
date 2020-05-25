@@ -17,7 +17,7 @@ const PrivateRouteWithLayout = props => {
                     ? <Layout>
                         <Component {...matchProps} />
                     </Layout>
-                    : <Redirect to='/signin' />
+                    : <Redirect to='/sign-in' />
             )}
         />
     );

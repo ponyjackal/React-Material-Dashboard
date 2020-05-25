@@ -44,8 +44,14 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: 'Dashboard',
-      href: '/dashboard',
+      title: 'Broadcasts',
+      href: '/#',
+      items: [
+        { title: 'Create', href: '/create', icon: <ShoppingBasketIcon /> },
+        { title: 'Scheduled', href: '/scheduled', icon: <ShoppingBasketIcon /> },
+        { title: 'Sent', href: '/sent', icon: <ShoppingBasketIcon /> },
+        { title: 'Archived', href: '/archived', icon: <ShoppingBasketIcon /> },
+      ],
       icon: <DashboardIcon />
     },
     {
@@ -103,7 +109,7 @@ const Sidebar = props => {
           className={classes.nav}
           pages={pages}
         />
-        <UpgradePlan />
+        {/* <UpgradePlan /> */}
       </div>
     </Drawer>
   );
