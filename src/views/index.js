@@ -9,6 +9,7 @@ export { default as SignUp } from './SignUp';
 export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
 
-export { default as CreateBroadcast } from './Create';
-export { default as ScheduledBroadcast } from './Scheduled';
+export { default as ScheduleBroadcast } from './Schedule';
+export { default as Broadcasts } from './Broadcasts';
+export { default as Customers } from './Customers';
 

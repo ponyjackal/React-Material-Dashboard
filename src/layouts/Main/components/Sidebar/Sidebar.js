@@ -44,13 +44,16 @@ const Sidebar = props => {
 
   const pages = [
     {
+      title: 'Customers',
+      href: '/customers',
+      icon: <PeopleIcon />
+    },
+    {
       title: 'Broadcasts',
       href: '/#',
       items: [
-        { title: 'Create', href: '/create', icon: <ShoppingBasketIcon /> },
-        { title: 'Scheduled', href: '/scheduled', icon: <ShoppingBasketIcon /> },
-        { title: 'Sent', href: '/sent', icon: <ShoppingBasketIcon /> },
-        { title: 'Archived', href: '/archived', icon: <ShoppingBasketIcon /> },
+        { title: 'Schedule', href: '/schedule', icon: <ShoppingBasketIcon /> },
+        { title: 'Broadcasts', href: '/broadcasts', icon: <ShoppingBasketIcon /> },
       ],
       icon: <DashboardIcon />
     },

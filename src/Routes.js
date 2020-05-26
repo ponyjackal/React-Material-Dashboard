@@ -15,8 +15,9 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
-  CreateBroadcast as CreateBroadcastView,
-  ScheduledBroadcast as ScheduledBroadcastView
+  ScheduleBroadcast as ScheduleBroadcastView,
+  Broadcasts as BroadcastsView,
+  Customers as CustomersView,
 } from './views';
 
 const Routes = () => {
@@ -34,16 +35,22 @@ const Routes = () => {
         path="/dashboard"
       />
       <PrivateRouteWithLayout
-        component={CreateBroadcastView}
+        component={ScheduleBroadcastView}
         exact
         layout={MainLayout}
-        path="/create"
+        path="/schedule"
       />
       <PrivateRouteWithLayout
-        component={ScheduledBroadcastView}
+        component={BroadcastsView}
         exact
         layout={MainLayout}
-        path="/scheduled"
+        path="/broadcasts"
+      />
+      <PrivateRouteWithLayout
+        component={CustomersView}
+        exact
+        layout={MainLayout}
+        path="/customers"
       />
       <PrivateRouteWithLayout
         component={UserListView}

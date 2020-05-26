@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CreateBroadcast = () => {
+const ScheduleBroadcast = () => {
   const classes = useStyles();
   const [values, setValues] = useState({
     name: 'Shen',
@@ -220,4 +220,4 @@ const CreateBroadcast = () => {
   );
 };
 
-export default CreateBroadcast;
+export default ScheduleBroadcast;

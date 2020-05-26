@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILED } from './constants';
+import { SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILED, SIGNOUT } from './constants';
 import { signin } from './actions';
 
 const InitialState = {
@@ -16,6 +16,10 @@ const auth = handleActions(
         [SIGNIN_FAILED]: (state) => ({
             ...state,
             isAuthenticated: false,
+        }),
+        [SIGNOUT]: (state) => ({
+            ...state,
+            isAuthenticated: false
         })
     },
     InitialState
