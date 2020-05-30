@@ -71,8 +71,7 @@ const CustomersToolbar = props => {
           }
         }
       });
-      // onImport(data);
-      console.log("data", data);
+      onImport(data);
     }
     reader.readAsText(files[0]);
   }

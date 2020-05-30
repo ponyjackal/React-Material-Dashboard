@@ -6,7 +6,7 @@ const makeAPI = () => {
     const token = localStorage.getItem('token');
 
     const API = axios.create({
-        baseURL: 'http://localhost:8000/',
+        baseURL: 'http://161.35.118.222/',
         headers: {
             'Content-Type': 'application/json',
             // 'Access-Control-Allow-Origin': '*',
