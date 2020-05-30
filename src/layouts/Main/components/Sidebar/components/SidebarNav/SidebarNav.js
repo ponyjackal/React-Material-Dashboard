@@ -78,10 +78,10 @@ const SidebarNav = props => {
           "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
         }
 
-        style={{ marginLeft: '80px', }}
+        style={{ marginLeft: 60, }}
       />
     ) : (
-        <KeyboardArrowRightIcon className="sidebar-item-expand-arrow" style={{ marginLeft: '80px', }} />
+        <KeyboardArrowRightIcon className="sidebar-item-expand-arrow" style={{ marginLeft: 60, }} />
       );
   }
 

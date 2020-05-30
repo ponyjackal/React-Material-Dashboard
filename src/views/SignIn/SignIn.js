@@ -12,7 +12,6 @@ import {
   Typography,
   CircularProgress
 } from '@material-ui/core';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import { Facebook as FacebookIcon, Google as GoogleIcon } from 'icons';
 
 import { signin } from './../../redux/auth/actions';
@@ -126,21 +125,18 @@ const useStyles = makeStyles(theme => ({
   signInButton: {
     margin: theme.spacing(2, 0)
   },
-  circularProgress: {
-
-  }
 }));
 
 const SignIn = props => {
   const { history } = props;
   const classes = useStyles();
 
-  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
+  const token = useSelector(({ auth }) => auth.token);
   const isLoading = useSelector(({ loading }) => loading.SIGNIN);
   const [onSignIn] = useActions(
     [signin],
     []
-  )
+  );
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -160,15 +156,15 @@ const SignIn = props => {
   }, [formState.values]);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (token) {
       history.push('/');
       try {
-        localStorage.setItem('isAuthenticated', isAuthenticated);
+        localStorage.setItem('token', token);
       } catch (e) {
         console.log('localStorage is not working');
       }
     }
-  }, [history, isAuthenticated]);
+  }, [history, token]);
 
   const handleChange = event => {
     event.persist();
@@ -217,23 +213,8 @@ const SignIn = props => {
                 className={classes.quoteText}
                 variant="h1"
               >
-                Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                they sold out High Life.
+                FRUIT TRUCK DELIVERY ORDERS & RESERVATIONS
               </Typography>
-              <div className={classes.person}>
-                <Typography
-                  className={classes.name}
-                  variant="body1"
-                >
-                  Takamaru Ayako
-                </Typography>
-                <Typography
-                  className={classes.bio}
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </div>
             </div>
           </div>
         </Grid>

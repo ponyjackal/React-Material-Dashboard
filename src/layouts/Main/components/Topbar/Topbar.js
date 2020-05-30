@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
   },
   signOutButton: {
     marginLeft: theme.spacing(1)
+  },
+  logo: {
+    height: 50,
   }
 }));
 
@@ -31,7 +34,7 @@ const Topbar = props => {
 
   const [notifications] = useState([]);
 
-  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
+  const token = useSelector(({ auth }) => auth.token);
   const [onSignOut] = useActions([signout], []);
 
   const handleSignout = () => {
@@ -39,15 +42,15 @@ const Topbar = props => {
   }
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      history.push('/sign-in');
+    if (!token) {
       try {
-        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('token');
       } catch (e) {
         console.log('localStorage is not working');
       }
+      history.push('/sign-in');
     }
-  }, [history, isAuthenticated]);
+  }, [history, token]);
 
   return (
     <AppBar
@@ -58,7 +61,8 @@ const Topbar = props => {
         <RouterLink to="/">
           <img
             alt="Logo"
-            src="/images/logos/logo--white.svg"
+            className={classes.logo}
+            src="/images/logos/fruittruck.png"
           />
         </RouterLink>
         <div className={classes.flexGrow} />

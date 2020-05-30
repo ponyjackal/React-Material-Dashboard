@@ -38,7 +38,7 @@ const BroadcastsTable = props => {
             label: 'Status'
         },
         {
-            name: 'date',
+            name: 'start_at',
             label: 'Date'
         },
     ];
@@ -48,7 +48,7 @@ const BroadcastsTable = props => {
             <CardContent className={classes.content}>
                 <PerfectScrollbar>
                     <div className={classes.inner}>
-                        <MUIDataTable title={title} data={broadcasts} columns={columns} />
+                        <MUIDataTable data={broadcasts} columns={columns} />
                     </div>
                 </PerfectScrollbar>
             </CardContent>
@@ -58,7 +58,7 @@ const BroadcastsTable = props => {
 
 BroadcastsTable.propTypes = {
     className: PropTypes.string,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     broadcasts: PropTypes.array.isRequired
 };
 

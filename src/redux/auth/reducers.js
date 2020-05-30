@@ -1,25 +1,24 @@
 import { handleActions } from 'redux-actions';
-import { SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILED, SIGNOUT } from './constants';
-import { signin } from './actions';
+import { SIGNIN_SUCCESS, SIGNIN_FAILED, SIGNOUT } from './constants';
 
 const InitialState = {
-    isAuthenticated: false,
+
     token: null,
 }
 
 const auth = handleActions(
     {
-        [SIGNIN_SUCCESS]: (state) => ({
+        [SIGNIN_SUCCESS]: (state, { payload: data }) => ({
             ...state,
-            isAuthenticated: true,
+            token: data.access_token,
         }),
         [SIGNIN_FAILED]: (state) => ({
             ...state,
-            isAuthenticated: false,
+            token: null,
         }),
         [SIGNOUT]: (state) => ({
             ...state,
-            isAuthenticated: false
+            token: null,
         })
     },
     InitialState

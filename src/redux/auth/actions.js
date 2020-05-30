@@ -6,7 +6,7 @@ export const signin = createAction(SIGNIN_REQUEST, ({ email, password }) => ({
     email,
     password,
 }));
-export const signinSuccess = createAction(SIGNIN_SUCCESS);
+export const signinSuccess = createAction(SIGNIN_SUCCESS, token => token);
 export const signinFailed = createAction(SIGNIN_FAILED);
 
 export const signout = createAction(SIGNOUT);

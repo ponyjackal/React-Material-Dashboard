@@ -5,15 +5,13 @@ import { useSelector } from 'react-redux';
 
 const PrivateRouteWithLayout = props => {
     const { layout: Layout, component: Component, ...rest } = props;
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-
-    console.log("isAuthenticated", isAuthenticated);
+    const token = useSelector(state => state.auth.token);
 
     return (
         <Route
             {...rest}
             render={matchProps => (
-                isAuthenticated === true
+                token
                     ? <Layout>
                         <Component {...matchProps} />
                     </Layout>

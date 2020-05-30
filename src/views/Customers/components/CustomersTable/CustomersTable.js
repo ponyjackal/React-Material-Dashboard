@@ -26,20 +26,28 @@ const CustomersTable = props => {
 
   const columns = [
     {
-      name: 'name',
-      label: 'Name'
+      name: 'first_name',
+      label: 'First Name'
+    },
+    {
+      name: 'last_name',
+      label: 'Last Name',
     },
     {
       name: 'email',
       label: 'Email',
     },
     {
-      name: 'phone',
+      name: 'phone_number',
       label: 'Phone'
     },
     {
-      name: 'createdAt',
-      label: 'Date'
+      name: 'state',
+      label: 'State'
+    },
+    {
+      name: 'city',
+      label: 'City'
     },
   ];
 
@@ -48,7 +56,7 @@ const CustomersTable = props => {
       <CardContent className={classes.content}>
         <PerfectScrollbar>
           <div className={classes.inner}>
-            <MUIDataTable title={title} data={customers} columns={columns} />
+            <MUIDataTable data={customers} columns={columns} />
           </div>
         </PerfectScrollbar>
       </CardContent>
@@ -58,7 +66,7 @@ const CustomersTable = props => {
 
 CustomersTable.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   customers: PropTypes.array.isRequired
 };
 

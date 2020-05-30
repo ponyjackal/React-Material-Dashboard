@@ -1,5 +1,6 @@
 import 'date-fns';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -11,13 +12,21 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  CircularProgress,
 } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+
+import csc from 'country-state-city';
+import states from './data';
+
+import useActions from './../../lib/useActions';
+import { addRequest } from './../../redux/broadcast/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,18 +34,44 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     height: '100%',
+  },
+  inputField: {
+    paddingtop: '10px',
+    paddingBottom: '10px',
+  },
+  scheduleButton: {
+    width: 100,
   }
 }));
 
-const ScheduleBroadcast = () => {
+const ScheduleBroadcast = props => {
+  const { history } = props;
   const classes = useStyles();
+
+  const isLoading = useSelector(({ loading }) => loading.BROADCAST_ADD);
+  const isAdded = useSelector(({ broadcast }) => broadcast.isAdded);
+  const [onAdd] = useActions(
+    [addRequest],
+    []
+  );
+
   const [values, setValues] = useState({
-    name: 'Shen',
-    dateTime: new Date('2014-08-18T21:11:54'),
-    state: 'Alabama',
-    city: 'Montgomery',
+    name: '',
+    dateTime: new Date(),
+    state: {
+      id: 0,
+      value: '',
+      label: ''
+    },
+    city: '',
     message: ''
   });
+
+  // useEffect(() => {
+  //   if (isAdded) {
+  //     history.push("/broadcasts");
+  //   }
+  // }, [isAdded]);
 
   const handleChange = event => {
     setValues({
@@ -44,24 +79,44 @@ const ScheduleBroadcast = () => {
       [event.target.name]: event.target.value
     });
   };
+  const handleDateChange = (date) => {
+    setValues({
+      ...values,
+      dateTime: date
+    });
+  };
+
+  const handleStateChange = (event, newValue) => {
+
+    const state = newValue ? newValue : {
+      id: '',
+      value: '',
+      label: ''
+    };
+
+    setValues({
+      ...values,
+      state: state
+    });
+
+  }
+
+  const handleCityChange = (event, newValue) => {
+    const city = newValue ? newValue : "";
+    setValues({
+      ...values,
+      city: city
+    });
+  }
 
   const handleSubmit = () => {
-    console.log("values", values);
+    console.log(values);
+    onAdd({
+      ...values,
+      state: values.state.value
+    });
   }
-  const states = [
-    {
-      value: 'alabama',
-      label: 'Alabama'
-    },
-    {
-      value: 'new-york',
-      label: 'New York'
-    },
-    {
-      value: 'san-francisco',
-      label: 'San Francisco'
-    }
-  ];
+
   return (
     <div className={classes.root}>
       <Card className={classes.card}>
@@ -71,7 +126,7 @@ const ScheduleBroadcast = () => {
         >
           <CardHeader
             subheader="The information can be edited"
-            title="Create Broadcasts"
+            title="Schedule Broadcasts"
           />
           <Divider />
           <CardContent>
@@ -86,9 +141,8 @@ const ScheduleBroadcast = () => {
               >
                 <TextField
                   fullWidth
-                  helperText="Please specify the boradcast name"
                   label="Name"
-                  margin="dense"
+                  margin="normal"
                   name="name"
                   onChange={handleChange}
                   required
@@ -96,8 +150,7 @@ const ScheduleBroadcast = () => {
                   variant="outlined"
                 />
               </Grid>
-
-              {/* <Grid
+              <Grid
                 item
                 md={12}
                 xs={12}
@@ -106,83 +159,76 @@ const ScheduleBroadcast = () => {
                   <Grid container justify="space-around">
                     <KeyboardDatePicker
                       margin="normal"
+                      variant="outlined"
                       id="date-picker-dialog"
                       label="Date picker dialog"
                       format="MM/dd/yyyy"
                       value={values.dateTime}
-                      onChange={handleChange}
+                      onChange={handleDateChange}
                       KeyboardButtonProps={{
                         'aria-label': 'change date',
                       }}
                     />
                     <KeyboardTimePicker
                       margin="normal"
+                      variant="outlined"
                       id="time-picker"
                       label="Time picker"
                       value={values.dateTime}
-                      onChange={handleChange}
+                      onChange={handleDateChange}
                       KeyboardButtonProps={{
                         'aria-label': 'change time',
                       }}
                     />
                   </Grid>
                 </MuiPickersUtilsProvider>
-              </Grid> */}
-              <Grid
-                item
-                md={6}
-                xs={12}
-              >
-                <TextField
-                  fullWidth
-                  label="Select State"
-                  margin="dense"
-                  name="state"
-                  onChange={handleChange}
-                  required
-                  select
-                  // eslint-disable-next-line react/jsx-sort-props
-                  SelectProps={{ native: true }}
-                  value={values.state}
-                  variant="outlined"
-                >
-                  {states.map(option => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
               </Grid>
               <Grid
                 item
                 md={6}
                 xs={12}
               >
-                <TextField
-                  fullWidth
-                  label="Select City"
-                  margin="dense"
-                  name="city"
-                  onChange={handleChange}
-                  required
-                  select
-                  // eslint-disable-next-line react/jsx-sort-props
-                  SelectProps={{ native: true }}
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  options={states}
+                  getOptionLabel={(option) => option.label}
+                  value={values.state}
+                  onChange={handleStateChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="State"
+                      margin="normal"
+                      variant="outlined"
+                      className={classes.options}
+                      InputProps={{ ...params.InputProps, type: 'search' }}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+              >
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  options={csc.getCitiesOfState(values.state.id).map((option) => option.name)}
                   value={values.city}
-                  variant="outlined"
-                >
-                  {states.map(option => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
+                  onChange={handleCityChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="City"
+                      className={classes.options}
+                      margin="normal"
+                      variant="outlined"
+                      InputProps={{ ...params.InputProps, type: 'search' }}
+                    />
+                  )}
+                />
               </Grid>
               <Grid
                 item
@@ -192,7 +238,7 @@ const ScheduleBroadcast = () => {
                 <TextField
                   fullWidth
                   label="Message"
-                  margin="dense"
+                  margin="normal"
                   name="message"
                   multiline
                   rows={4}
@@ -209,10 +255,13 @@ const ScheduleBroadcast = () => {
             <Button
               color="primary"
               variant="contained"
+              className={classes.scheduleButton}
               onClick={() => handleSubmit()}
             >
-              Create
-          </Button>
+              {isLoading
+                ? <CircularProgress color="inherit" size={26} />
+                : <>Schedule</>}
+            </Button>
           </CardActions>
         </form>
       </Card>

@@ -11,6 +11,10 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import CastIcon from '@material-ui/icons/Cast';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import ViewListIcon from '@material-ui/icons/ViewList';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
 
@@ -52,35 +56,20 @@ const Sidebar = props => {
       title: 'Broadcasts',
       href: '/#',
       items: [
-        { title: 'Schedule', href: '/schedule', icon: <ShoppingBasketIcon /> },
-        { title: 'Broadcasts', href: '/broadcasts', icon: <ShoppingBasketIcon /> },
+        { title: 'Schedule', href: '/schedule', icon: <ScheduleIcon /> },
+        { title: 'Broadcasts', href: '/broadcasts', icon: <ViewListIcon /> },
       ],
-      icon: <DashboardIcon />
+      icon: <CastIcon />
+    },
+    {
+      title: 'Chat',
+      href: '/products',
+      icon: <QuestionAnswerIcon />
     },
     {
       title: 'Users',
       href: '/users',
       icon: <PeopleIcon />
-    },
-    {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
-    },
-    {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
     },
     {
       title: 'Account',

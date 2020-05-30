@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     AppBar,
     Tabs,
     Tab,
     Box,
-    Typography
+    Typography,
+    CircularProgress
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+
 import { BroadcastsTable } from './components';
-import mockData from './data';
+import useActions from './../../lib/useActions';
+import { getRequest } from './../../redux/broadcast/actions';
 
 
 function TabPanel(props) {
@@ -48,14 +52,13 @@ const useStyles = makeStyles(theme => ({
         width: '100%'
     },
     content: {
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(2),
+        textAlign: 'center',
     },
-    loding_content: {
-        textAlign: 'center'
-    },
-    loading_progress: {
-        position: 'absolute',
-        top: '50%'
+    loading: {
+        display: 'inline-block',
+        marginTop: 100,
+        marginBottom: 100,
     },
     table_root: {
         flexGrow: 1,
@@ -63,52 +66,84 @@ const useStyles = makeStyles(theme => ({
     },
     app_bar: {
         fontSize: '30px'
+    },
+    image: {
+        marginTop: 50,
+        display: 'inline-block',
+        maxWidth: '100%',
+        height: 400,
+    },
+    loadingError: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
     }
 }));
 
 const Broadcasts = () => {
     const classes = useStyles();
 
-    const [broadcasts] = useState(mockData);
+    const isLoading = useSelector(({ loading }) => loading.BROADCAST_GET);
+    const isGet = useSelector(({ broadcast }) => broadcast.isGet);
+    const broadcasts = useSelector(({ broadcast }) => broadcast.broadcasts);
+
+    const [onGet] = useActions(
+        [getRequest],
+        []
+    );
 
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    useEffect(() => {
+        onGet();
+    }, []);
+
     return (
         <div className={classes.root}>
             <div className={classes.content}>
-                <div className={classes.table_root}>
-                    <AppBar position="static" color="default" className={classes.app_bar}>
-                        <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            variant="scrollable"
-                            scrollButtons="on"
-                            indicatorColor="primary"
-                            textColor="primary"
-                            aria-label="scrollable force tabs example">
-                            <Tab label="Draft" {...a11yProps(0)} />
-                            <Tab label="Scheduled" {...a11yProps(1)} />
-                            <Tab label="Sent" {...a11yProps(2)} />
-                            <Tab label="Archived" {...a11yProps(3)} />
-                        </Tabs>
-                    </AppBar>
-                    <TabPanel value={value} index={0}>
-                        <BroadcastsTable broadcasts={broadcasts} title="Draft" />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <BroadcastsTable broadcasts={broadcasts} title="Scheduled" />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <BroadcastsTable broadcasts={broadcasts} title="Sent" />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                        <BroadcastsTable broadcasts={broadcasts} title="Archived" />
-                    </TabPanel>
-                </div>
-
+                {isGet
+                    ? (<div className={classes.table_root}>
+                        <AppBar position="static" color="default" className={classes.app_bar}>
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                variant="scrollable"
+                                scrollButtons="on"
+                                indicatorColor="primary"
+                                textColor="primary"
+                                aria-label="scrollable force tabs example">
+                                <Tab label="Draft" {...a11yProps(0)} />
+                                <Tab label="Scheduled" {...a11yProps(1)} />
+                                <Tab label="Sent" {...a11yProps(2)} />
+                                <Tab label="Archived" {...a11yProps(3)} />
+                            </Tabs>
+                        </AppBar>
+                        <TabPanel value={value} index={0}>
+                            <BroadcastsTable broadcasts={broadcasts} title="Draft" />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <BroadcastsTable broadcasts={broadcasts} title="Scheduled" />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <BroadcastsTable broadcasts={broadcasts} title="Sent" />
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <BroadcastsTable broadcasts={broadcasts} title="Archived" />
+                        </TabPanel>
+                    </div>)
+                    : isLoading
+                        ? <CircularProgress color="primary" size={100} className={classes.loading} />
+                        : <div className={classes.loadingError}>
+                            <Typography variant="h1">Connection Error</Typography>
+                            <img
+                                alt="Under development"
+                                className={classes.image}
+                                src="/images/undraw_page_not_found_su7k.svg"
+                            />
+                        </div>}
             </div>
         </div>
     );
