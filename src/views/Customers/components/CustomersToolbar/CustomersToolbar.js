@@ -59,13 +59,21 @@ const CustomersToolbar = props => {
           //Split csv file data by comma so that we will have column data
           const elementRaw = element.split(',');
           if (element) {
+            let phone_number = elementRaw[18] ? elementRaw[18].replace(/\D/g, '') : "";
+            let first_name = elementRaw[3] ? elementRaw[3].replace(/[^a-zA-Z]/g, '') : "";
+            let last_name = elementRaw[4] ? elementRaw[4].replace(/[^a-zA-Z]/g, '') : "";
+            let city = elementRaw[13] ? elementRaw[13].replace(/[^a-zA-Z]/g, '') : "";
+            let state = elementRaw[14] ? elementRaw[14].replace(/[^a-zA-Z]/g, '') : "";
+            if (phone_number.charAt(0) == 1) {
+              phone_number = phone_number.substr(1);
+            }
             let param = {
               'email': elementRaw[2],
               'first_name': elementRaw[3],
               'last_name': elementRaw[4],
               'city': elementRaw[13],
               'state': elementRaw[14],
-              'phone_number': elementRaw[18]
+              'phone_number': phone_number ? phone_number : ""
             }
             data.push(param);
           }
