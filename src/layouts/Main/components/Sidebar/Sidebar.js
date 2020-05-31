@@ -63,7 +63,7 @@ const Sidebar = props => {
     },
     {
       title: 'Chat',
-      href: '/products',
+      href: '/chat',
       icon: <QuestionAnswerIcon />
     },
     {

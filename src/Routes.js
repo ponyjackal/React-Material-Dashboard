@@ -18,6 +18,7 @@ import {
   ScheduleBroadcast as ScheduleBroadcastView,
   Broadcasts as BroadcastsView,
   Customers as CustomersView,
+  Chat as ChatView,
 } from './views';
 
 const Routes = () => {
@@ -57,6 +58,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/users"
+      />
+      <PrivateRouteWithLayout
+        component={ChatView}
+        exact
+        layout={MainLayout}
+        path="/chat"
       />
       <PrivateRouteWithLayout
         component={ProductListView}

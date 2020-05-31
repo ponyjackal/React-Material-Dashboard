@@ -30,12 +30,16 @@ const BroadcastsTable = props => {
             label: 'Name'
         },
         {
-            name: 'list_size',
-            label: 'List Size',
+            name: 'target_state',
+            label: 'State'
         },
         {
-            name: 'status',
-            label: 'Status'
+            name: 'target_city',
+            label: 'City'
+        },
+        {
+            name: 'list_size',
+            label: 'List Size',
         },
         {
             name: 'start_at',

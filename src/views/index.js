@@ -12,4 +12,5 @@ export { default as UserList } from './UserList';
 export { default as ScheduleBroadcast } from './Schedule';
 export { default as Broadcasts } from './Broadcasts';
 export { default as Customers } from './Customers';
+export { default as Chat } from './Chat';
 

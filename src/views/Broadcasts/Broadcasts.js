@@ -122,16 +122,16 @@ const Broadcasts = () => {
                             </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
-                            <BroadcastsTable broadcasts={broadcasts} title="Draft" />
+                            <BroadcastsTable broadcasts={broadcasts.draft} title="Draft" />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <BroadcastsTable broadcasts={broadcasts} title="Scheduled" />
+                            <BroadcastsTable broadcasts={broadcasts.scheduled} title="Scheduled" />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            <BroadcastsTable broadcasts={broadcasts} title="Sent" />
+                            <BroadcastsTable broadcasts={broadcasts.sent} title="Sent" />
                         </TabPanel>
                         <TabPanel value={value} index={3}>
-                            <BroadcastsTable broadcasts={broadcasts} title="Archived" />
+                            <BroadcastsTable broadcasts={broadcasts.archived} title="Archived" />
                         </TabPanel>
                     </div>)
                     : isLoading
