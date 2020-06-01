@@ -41,7 +41,7 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={user.avatar}
+        source={require(user.avatar)}
         to="/settings"
       />
       <Typography
