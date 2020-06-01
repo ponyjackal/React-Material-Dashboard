@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TotalUsers = props => {
-  const { className, ...rest } = props;
+  const { className, totalCustomer, ...rest } = props;
 
   const classes = useStyles();
 
@@ -62,9 +62,9 @@ const TotalUsers = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL USERS
+              TOTAL CUSTOMERS
             </Typography>
-            <Typography variant="h3">1,600</Typography>
+            <Typography variant="h3">{totalCustomer}</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

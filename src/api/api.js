@@ -35,3 +35,6 @@ export const addBroadcast = (broadcast) => {
 
 export const getBroadcasts = () =>
     makeAPI().get('api/getBroadcasts')
+
+export const getDashboard = () =>
+    makeAPI().get('api/dashboard')

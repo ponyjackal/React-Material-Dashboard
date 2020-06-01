@@ -41,6 +41,11 @@ const useStyles = makeStyles(theme => ({
   },
   scheduleButton: {
     width: 100,
+  },
+  datTimePicker: {
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20,
   }
 }));
 
@@ -156,30 +161,44 @@ const ScheduleBroadcast = props => {
                 xs={12}
               >
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid container justify="space-around">
-                    <KeyboardDatePicker
-                      margin="normal"
-                      variant="outlined"
-                      id="date-picker-dialog"
-                      label="Date picker dialog"
-                      format="MM/dd/yyyy"
-                      value={values.dateTime}
-                      onChange={handleDateChange}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                      }}
-                    />
-                    <KeyboardTimePicker
-                      margin="normal"
-                      variant="outlined"
-                      id="time-picker"
-                      label="Time picker"
-                      value={values.dateTime}
-                      onChange={handleDateChange}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change time',
-                      }}
-                    />
+                  <Grid container justify="space-between">
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <KeyboardDatePicker
+                        className={classes.datTimePicker}
+                        margin="normal"
+                        variant="outlined"
+                        id="date-picker-dialog"
+                        label="Date picker dialog"
+                        format="MM/dd/yyyy"
+                        value={values.dateTime}
+                        onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                          'aria-label': 'change date',
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <KeyboardTimePicker
+                        className={classes.datTimePicker}
+                        margin="normal"
+                        variant="outlined"
+                        id="time-picker"
+                        label="Time picker"
+                        value={values.dateTime}
+                        onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                          'aria-label': 'change time',
+                        }}
+                      />
+                    </Grid>
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Grid>

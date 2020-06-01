@@ -104,38 +104,38 @@ const Broadcasts = () => {
     return (
         <div className={classes.root}>
             <div className={classes.content}>
-                {isLoading
-                    ? <CircularProgress color="primary" size={100} className={classes.loading} />
-                    : isGet
-                        ? (<div className={classes.table_root}>
-                            <AppBar position="static" color="default" className={classes.app_bar}>
-                                <Tabs
-                                    value={value}
-                                    onChange={handleChange}
-                                    variant="scrollable"
-                                    scrollButtons="on"
-                                    indicatorColor="primary"
-                                    textColor="primary"
-                                    aria-label="scrollable force tabs example">
-                                    <Tab label="Draft" {...a11yProps(0)} />
-                                    <Tab label="Scheduled" {...a11yProps(1)} />
-                                    <Tab label="Sent" {...a11yProps(2)} />
-                                    <Tab label="Archived" {...a11yProps(3)} />
-                                </Tabs>
-                            </AppBar>
-                            <TabPanel value={value} index={0}>
-                                <BroadcastsTable broadcasts={broadcasts.draft} title="Draft" />
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                <BroadcastsTable broadcasts={broadcasts.scheduled} title="Scheduled" />
-                            </TabPanel>
-                            <TabPanel value={value} index={2}>
-                                <BroadcastsTable broadcasts={broadcasts.sent} title="Sent" />
-                            </TabPanel>
-                            <TabPanel value={value} index={3}>
-                                <BroadcastsTable broadcasts={broadcasts.archived} title="Archived" />
-                            </TabPanel>
-                        </div>)
+                {isGet
+                    ? (<div className={classes.table_root}>
+                        <AppBar position="static" color="default" className={classes.app_bar}>
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                variant="scrollable"
+                                scrollButtons="on"
+                                indicatorColor="primary"
+                                textColor="primary"
+                                aria-label="scrollable force tabs example">
+                                <Tab label="Draft" {...a11yProps(0)} />
+                                <Tab label="Scheduled" {...a11yProps(1)} />
+                                <Tab label="Sent" {...a11yProps(2)} />
+                                <Tab label="Archived" {...a11yProps(3)} />
+                            </Tabs>
+                        </AppBar>
+                        <TabPanel value={value} index={0}>
+                            <BroadcastsTable broadcasts={broadcasts.draft} title="Draft" />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <BroadcastsTable broadcasts={broadcasts.scheduled} title="Scheduled" />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <BroadcastsTable broadcasts={broadcasts.sent} title="Sent" />
+                        </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <BroadcastsTable broadcasts={broadcasts.archived} title="Archived" />
+                        </TabPanel>
+                    </div>)
+                    : isLoading
+                        ? <CircularProgress color="primary" size={100} className={classes.loading} />
                         : <div className={classes.loadingError}>
                             <Typography variant="h1">Connection Error</Typography>
                             <img

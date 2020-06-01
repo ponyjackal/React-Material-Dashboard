@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import {
+    Grid,
+    Card
+} from '@material-ui/core';
+import LeftList from './LeftList';
+import { products } from './data.js';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,7 +29,32 @@ const Chat = () => {
 
     return (
         <div className={classes.root}>
-
+            <h1>Comming Soon!</h1>
+            {/* <Card>
+                <Grid
+                    container
+                    spacing={4}
+                >
+                    <Grid
+                        item
+                        lg={3}
+                        sm={3}
+                        xl={3}
+                        xs={3}
+                    >
+                        <LeftList products={products} />
+                    </Grid>
+                    <Grid
+                        item
+                        lg={9}
+                        sm={9}
+                        xl={9}
+                        xs={9}
+                    >
+                        <h1>Message</h1>
+                    </Grid>
+                </Grid>
+            </Card> */}
         </div>
     );
 };
