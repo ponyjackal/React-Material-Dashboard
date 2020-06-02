@@ -57,10 +57,10 @@ const Customers = () => {
     <div className={classes.root}>
       <CustomersToolbar />
       <div className={classes.content}>
-        {isGet
-          ? <CustomersTable customers={customers} title="Customers" /> :
-          isLoading
-            ? <CircularProgress color="primary" size={100} className={classes.loading} />
+        {isLoading
+          ? <CircularProgress color="primary" size={100} className={classes.loading} />
+          : isGet
+            ? <CustomersTable customers={customers} title="Customers" />
             : <div className={classes.loadingError}>
               <Typography variant="h1">Connection Error</Typography>
               <img

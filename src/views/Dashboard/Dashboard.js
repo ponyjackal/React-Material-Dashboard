@@ -66,48 +66,50 @@ const Dashboard = () => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        {isGet
-          ? (<Grid
-            container
-            spacing={4}
-          >
-            <Grid
-              item
-              lg={6}
-              sm={6}
-              xl={6}
-              xs={12}
+        {isLoading
+          ? <CircularProgress color="primary" size={100} className={classes.loading} />
+          : isGet
+            ? (<Grid
+              container
+              spacing={4}
             >
-              <Budget totalCost={data.approx_cost} />
-            </Grid>
-            <Grid
-              item
-              lg={6}
-              sm={6}
-              xl={6}
-              xs={12}
-            >
-              <TotalUsers totalCustomer={data.customer_count} />
-            </Grid>
-            <Grid
-              item
-              lg={6}
-              sm={6}
-              xl={6}
-              xs={12}
-            >
-              <TasksProgress />
-            </Grid>
-            <Grid
-              item
-              lg={6}
-              sm={6}
-              xl={6}
-              xs={12}
-            >
-              <TotalProfit totalBoardcasts={data.broadcasts_count} />
-            </Grid>
-            {/* <Grid
+              <Grid
+                item
+                lg={6}
+                sm={6}
+                xl={6}
+                xs={12}
+              >
+                <Budget totalCost={data.approx_cost} />
+              </Grid>
+              <Grid
+                item
+                lg={6}
+                sm={6}
+                xl={6}
+                xs={12}
+              >
+                <TotalUsers totalCustomer={data.customer_count} />
+              </Grid>
+              <Grid
+                item
+                lg={6}
+                sm={6}
+                xl={6}
+                xs={12}
+              >
+                <TasksProgress />
+              </Grid>
+              <Grid
+                item
+                lg={6}
+                sm={6}
+                xl={6}
+                xs={12}
+              >
+                <TotalProfit totalBoardcasts={data.broadcasts_count} />
+              </Grid>
+              {/* <Grid
                 item
                 lg={8}
                 md={12}
@@ -143,9 +145,7 @@ const Dashboard = () => {
               >
                 <LatestOrders />
               </Grid> */}
-          </Grid>) :
-          isLoading
-            ? <CircularProgress color="primary" size={100} className={classes.loading} />
+            </Grid>)
             : <div className={classes.loadingError}>
               <Typography variant="h1">Connection Error</Typography>
               <img

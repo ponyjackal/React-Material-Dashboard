@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import {
+    Paper,
     List,
     ListItem,
     ListItemText
@@ -39,7 +40,7 @@ const LeftList = ({ products, className, ...rest }) => {
             {...rest}
             className={clsx(classes.root, className)}
         >
-            <div className={classes.row}>
+            <div>
                 <div className={classes.row}>
                     <SearchInput
                         className={classes.searchInput}
@@ -47,15 +48,15 @@ const LeftList = ({ products, className, ...rest }) => {
                     />
                 </div>
 
-                <div className={classes.row}>
+                <Paper>
                     <List>
-                        {products.map(key =>
-                            <ListItem button key={key} onClick={() => console.log("clicked")} >
-                                <ListItemText primary={key} />
+                        {products.map(({ ID }) =>
+                            <ListItem button key={ID} onClick={(ID) => console.log("clicked", ID)} >
+                                <ListItemText primary={ID} />
                             </ListItem>
                         )}
                     </List>
-                </div>
+                </Paper>
             </div>
         </div>
     );

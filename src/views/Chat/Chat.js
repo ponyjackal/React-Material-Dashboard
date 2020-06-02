@@ -29,8 +29,7 @@ const Chat = () => {
 
     return (
         <div className={classes.root}>
-            <h1>Comming Soon!</h1>
-            {/* <Card>
+            <Card>
                 <Grid
                     container
                     spacing={4}
@@ -54,7 +53,7 @@ const Chat = () => {
                         <h1>Message</h1>
                     </Grid>
                 </Grid>
-            </Card> */}
+            </Card>
         </div>
     );
 };

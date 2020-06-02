@@ -7,6 +7,7 @@ const makeAPI = () => {
 
     const API = axios.create({
         baseURL: 'http://161.35.118.222/',
+        // baseURL: 'http://localhost:8000/',
         headers: {
             'Content-Type': 'application/json',
             // 'Access-Control-Allow-Origin': '*',
