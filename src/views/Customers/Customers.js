@@ -60,7 +60,7 @@ const Customers = () => {
         {isLoading
           ? <CircularProgress color="primary" size={100} className={classes.loading} />
           : isGet
-            ? <CustomersTable customers={customers} title="Customers" />
+            ? <CustomersTable customers={customers.data} title="Customers" />
             : <div className={classes.loadingError}>
               <Typography variant="h1">Connection Error</Typography>
               <img
