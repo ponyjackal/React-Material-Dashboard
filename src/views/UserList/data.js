@@ -12,7 +12,7 @@ export default [
     },
     email: 'irina@freshfarmsusa.com',
     phone: '',
-    avatarUrl: '/images/avatars/irina.jpeg',
+    avatarUrl: './images/avatars/irina.jpeg',
     createdAt: 1555016400000
   },
 ];
