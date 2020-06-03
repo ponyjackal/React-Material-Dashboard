@@ -26,13 +26,11 @@ export const signin = ({ email, password }) =>
 export const importCustomers = (customers) =>
     makeAPI().post('api/importCustomer', customers)
 
-export const getCustomers = () =>
-    makeAPI().get('api/getCustomers')
+export const getCustomers = ({ rowPerPage, page }) =>
+    makeAPI().post(`api/getCustomers?page=${page}`, { rowPerPage });
 
-export const addBroadcast = (broadcast) => {
-    console.log(broadcast);
-    return makeAPI().post('api/addBroadcast', broadcast)
-}
+export const addBroadcast = (broadcast) =>
+    makeAPI().post('api/addBroadcast', broadcast)
 
 export const getBroadcasts = () =>
     makeAPI().get('api/getBroadcasts')

@@ -6,6 +6,6 @@ export const importRequest = createAction(IMPORT_REQUEST, customers => customers
 export const importSuccess = createAction(IMPORT_SUCCESS);
 export const importFailed = createAction(IMPORT_FAILED);
 
-export const getRequest = createAction(GET_REQUEST);
+export const getRequest = createAction(GET_REQUEST, ({ rowPerPage, page }) => ({ rowPerPage, page }));
 export const getSuccess = createAction(GET_SUCCESS);
 export const getFailed = createAction(GET_FAILED);

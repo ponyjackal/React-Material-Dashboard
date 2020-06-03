@@ -5,7 +5,7 @@ import {
     Card
 } from '@material-ui/core';
 import LeftList from './LeftList';
-import { products } from './data.js';
+import { conversations } from './data.js';
 
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +41,7 @@ const Chat = () => {
                         xl={3}
                         xs={3}
                     >
-                        <LeftList products={products} />
+                        <LeftList conversations={conversations} />
                     </Grid>
                     <Grid
                         item

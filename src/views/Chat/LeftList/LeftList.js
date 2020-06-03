@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const LeftList = ({ products, className, ...rest }) => {
+const LeftList = ({ conversations, className, ...rest }) => {
 
     const classes = useStyles();
 
@@ -50,7 +50,7 @@ const LeftList = ({ products, className, ...rest }) => {
 
                 <Paper>
                     <List>
-                        {products.map(({ ID }) =>
+                        {conversations.map(({ ID }) =>
                             <ListItem button key={ID} onClick={(ID) => console.log("clicked", ID)} >
                                 <ListItemText primary={ID} />
                             </ListItem>

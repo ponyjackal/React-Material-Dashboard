@@ -1,4 +1,4 @@
-export const products = [{
+export const conversations = [{
     'ID': 1,
     'Name': 'HD Video Player',
     'Price': 330,
