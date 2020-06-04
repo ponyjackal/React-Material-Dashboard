@@ -37,3 +37,9 @@ export const getBroadcasts = () =>
 
 export const getDashboard = () =>
     makeAPI().get('api/dashboard')
+
+export const getChat = () =>
+    makeAPI().get('api/getConversations')
+
+export const getMessages = (id) =>
+    makeAPI().get(`api/getMessages/${id}`)

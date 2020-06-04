@@ -11,9 +11,7 @@ import {
     Typography
 } from '@material-ui/core';
 import useActions from './../../../lib/useActions';
-import { getRequest } from './../../../redux/chat/actions';
-
-import { SearchInput } from 'components';
+import { getRequest } from './../../../redux/message/actions';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -45,13 +43,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
-
+const Message = ({ selectedChat }) => {
     const classes = useStyles();
 
-    const isLoading = useSelector(({ loading }) => loading.CHAT_GET);
-    const isGet = useSelector(({ chat }) => chat.isGet);
-    const data = useSelector(({ chat }) => chat.data);
+    const isLoading = useSelector(({ loading }) => loading.MESSAGE_GET);
+    const isGet = useSelector(({ message }) => message.isGet);
+    const data = useSelector(({ message }) => message.data);
 
     const [onGet] = useActions(
         [getRequest],
@@ -59,22 +56,12 @@ const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
     );
 
     useEffect(() => {
-        onGet();
+        onGet(selectedChat);
     }, []);
 
     return (
-        <div
-            {...rest}
-            className={clsx(classes.root, className)}
-        >
+        <div className={classes.root}>
             <div className={classes.content}>
-                <div className={classes.row}>
-                    <SearchInput
-                        className={classes.searchInput}
-                        placeholder="Search user"
-                    />
-                </div>
-
                 {isLoading
                     ? <CircularProgress color="primary" size={50} className={classes.loading} />
                     : isGet ?
@@ -92,7 +79,6 @@ const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
             </div>
         </div>
     );
-
 }
 
-export default LeftList;
+export default React.memo(Message);

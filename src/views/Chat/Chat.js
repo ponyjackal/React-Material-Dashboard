@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import {
     Grid,
     Card
 } from '@material-ui/core';
 import LeftList from './LeftList';
+import Message from './Message';
 import { conversations } from './data.js';
 
 
@@ -13,7 +14,8 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3)
     },
     content: {
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(2),
+        height: '80vh',
     },
     pagination: {
         marginTop: theme.spacing(3),
@@ -26,10 +28,14 @@ const useStyles = makeStyles(theme => ({
 const Chat = () => {
     const classes = useStyles();
 
+    const selectedChat = useRef(0);
 
+    const updateSelect = (index) => {
+        selectedChat.current = index;
+    }
     return (
         <div className={classes.root}>
-            <Card>
+            <Card className={classes.content}>
                 <Grid
                     container
                     spacing={4}
@@ -41,7 +47,7 @@ const Chat = () => {
                         xl={3}
                         xs={3}
                     >
-                        <LeftList conversations={conversations} />
+                        <LeftList updateSelect={updateSelect} />
                     </Grid>
                     <Grid
                         item
@@ -50,7 +56,7 @@ const Chat = () => {
                         xl={9}
                         xs={9}
                     >
-                        <h1>Message</h1>
+                        <Message selectedChat={selectedChat} />
                     </Grid>
                 </Grid>
             </Card>
