@@ -62,6 +62,12 @@ const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
         onGet();
     }, []);
 
+    useEffect(() => {
+        Object.keys(data).map(key => {
+            console.log(data[key]);
+        });
+    }, [data]);
+
     return (
         <div
             {...rest}
@@ -79,11 +85,13 @@ const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
                     ? <CircularProgress color="primary" size={50} className={classes.loading} />
                     : isGet ?
                         <List>
-                            {data && data.map(({ ID }) =>
-                                <ListItem button key={ID} onClick={(ID) => console.log("clicked", ID)} >
-                                    <ListItemText primary={ID} />
-                                </ListItem>
-                            )}
+                            {data.length > 0 && Object.keys(data).map((conversation, key) => {
+                                return (
+                                    <ListItem button key={conversation.id} onClick={(to) => console.log("clicked", to)} >
+                                        <ListItemText primary={conversation.to} />
+                                    </ListItem>
+                                );
+                            })}
                         </List>
                         : <div className={classes.loadingError}>
                             <Typography variant="h1">Connection Error</Typography>

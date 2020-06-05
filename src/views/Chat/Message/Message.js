@@ -66,7 +66,7 @@ const Message = ({ selectedChat }) => {
                     ? <CircularProgress color="primary" size={50} className={classes.loading} />
                     : isGet ?
                         <List>
-                            {data && data.map(({ ID }) =>
+                            {data.length && data.map(({ ID }) =>
                                 <ListItem button key={ID} onClick={(ID) => console.log("clicked", ID)} >
                                     <ListItemText primary={ID} />
                                 </ListItem>
