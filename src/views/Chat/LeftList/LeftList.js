@@ -45,7 +45,12 @@ const useStyles = makeStyles(theme => ({
     active: {
         color: theme.palette.primary.main,
         fontWeight: theme.typography.fontWeightMedium,
+        padding: '10px 8px',
         justifyContent: 'center',
+        textTransform: 'none',
+        letterSpacing: 0,
+        width: '100%',
+        borderLeft: '5px solid',
         '& $icon': {
             color: theme.palette.primary.main
         }
@@ -57,7 +62,10 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'none',
         letterSpacing: 0,
         width: '100%',
-        fontWeight: theme.typography.fontWeightMedium
+        fontWeight: theme.typography.fontWeightMedium,
+        "&:hover": {
+            background: "#ccc"
+        },
     },
     item: {
         display: 'inline-block',
@@ -116,14 +124,14 @@ const LeftList = ({ setSelectedChat, selectedChat, data, className, ...rest }) =
                                         className={classes.active}
                                         onClick={() => setSelectedChat(key)}
                                     >
-                                        <div className={classes.icon}>{data[key].id}</div>
+                                        <div className={classes.icon}><MarkunreadIcon /></div>
                                         {visualizeNumber(data[key].to)}
                                     </Button>)
                                     : (<Button
                                         className={classes.button}
                                         onClick={() => setSelectedChat(key)}
                                     >
-                                        <div className={classes.icon}>{data[key].id}</div>
+                                        <div className={classes.icon}><MarkunreadIcon /></div>
                                         {visualizeNumber(data[key].to)}
                                     </Button>)}
                             </ListItem>

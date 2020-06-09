@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
     content: {
         marginTop: theme.spacing(2),
+        textAlign: 'center',
         height: '80vh',
     },
     loading: {
