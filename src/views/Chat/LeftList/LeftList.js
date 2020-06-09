@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1)
     },
     searchInput: {
-        marginRight: theme.spacing(1)
+        border: "0.5px solid",
+        margin: theme.spacing(2),
     },
     content: {
         marginTop: theme.spacing(2),
@@ -40,7 +41,9 @@ const useStyles = makeStyles(theme => ({
     },
     list: {
         marginBottom: theme.spacing(2),
-
+        height: '70vh',
+        maxHeight: '70vh',
+        overflow: 'auto',
     },
     active: {
         color: theme.palette.primary.main,

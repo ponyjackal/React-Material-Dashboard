@@ -17,9 +17,9 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3)
     },
     content: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
         textAlign: 'center',
-        height: '80vh',
+        height: '82vh',
     },
     loading: {
         display: 'inline-block',
