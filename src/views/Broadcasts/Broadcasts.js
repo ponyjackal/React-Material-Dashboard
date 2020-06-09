@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -99,7 +99,7 @@ const Broadcasts = () => {
 
     useEffect(() => {
         onGet();
-    }, []);
+    }, [onGet]);
 
     return (
         <div className={classes.root}>

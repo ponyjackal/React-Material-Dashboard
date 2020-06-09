@@ -78,7 +78,7 @@ const CustomersToolbar = props => {
             let last_name = elementRaw[last_name_index] ? elementRaw[last_name_index].replace(/[^a-zA-Z]/g, '') : "";
             let city = elementRaw[city_index] ? elementRaw[city_index].replace(/[^a-zA-Z]/g, '') : "";
             let state = elementRaw[state_index] ? elementRaw[state_index].replace(/[^a-zA-Z]/g, '') : "";
-            if (phone_number.charAt(0) == 1) {
+            if (phone_number.charAt(0) === 1) {
               phone_number = phone_number.substr(1);
             }
             if (phone_number || email) {

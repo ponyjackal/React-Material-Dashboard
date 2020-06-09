@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import {
-  Card,
-  CardActions,
-  CardContent,
-  Checkbox,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  TablePagination,
-  CircularProgress
+  CircularProgress,
+  Typography
 } from '@material-ui/core';
 
 import DataTable from './../../../../components/DataTable';
@@ -76,7 +64,7 @@ const columns = [
 ];
 
 const CustomersTable = props => {
-  const { className, title, ...rest } = props;
+  // const { className, title } = props;
   const classes = useStyles();
 
   const isLoading = useSelector(({ loading }) => loading.CUSTOMER_GET);
@@ -94,13 +82,15 @@ const CustomersTable = props => {
     []
   );
 
-  useEffect(() => {
-    getCustomers();
-  }, []);
+
 
   const getCustomers = (rowPerPage = 10, page = 1) => {
     onGet({ rowPerPage, page });
   }
+
+  useEffect(() => {
+    getCustomers();
+  }, []);
 
   const handleSelectAll = event => {
     // const { customers } = props;

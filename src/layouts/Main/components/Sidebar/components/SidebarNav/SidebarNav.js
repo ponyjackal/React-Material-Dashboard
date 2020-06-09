@@ -1,11 +1,10 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { List, ListItem, Button, colors } from '@material-ui/core';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import Collapse from "@material-ui/core/Collapse";
 
@@ -74,10 +73,7 @@ const SidebarNav = props => {
   if (Array.isArray(pages) && pages.length) {
     expandIcon = !collapsed ? (
       <ExpandMoreIcon
-        className={
-          "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
-        }
-
+        className={"sidebar-item-expand-arrow sidebar-item-expand-arrow-expanded"}
         style={{ marginLeft: 60, }}
       />
     ) : (

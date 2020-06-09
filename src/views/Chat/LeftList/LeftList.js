@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import {
-    Paper,
     List,
     ListItem,
-    ListItemText,
-    CircularProgress,
-    Typography
+    Button,
+    colors,
 } from '@material-ui/core';
-import useActions from './../../../lib/useActions';
-import { getRequest } from './../../../redux/chat/actions';
+import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
+import MarkunreadIcon from '@material-ui/icons/Markunread';
 
 import { SearchInput } from 'components';
 
@@ -21,6 +18,7 @@ const useStyles = makeStyles(theme => ({
         height: '42px',
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop: theme.spacing(1)
     },
     spacer: {
@@ -38,35 +36,58 @@ const useStyles = makeStyles(theme => ({
     content: {
         marginTop: theme.spacing(2),
         textAlign: 'center',
+        justifyContent: 'center',
     },
-    loading: {
+    list: {
+        marginBottom: theme.spacing(2),
+
+    },
+    active: {
+        color: theme.palette.primary.main,
+        fontWeight: theme.typography.fontWeightMedium,
+        justifyContent: 'center',
+        '& $icon': {
+            color: theme.palette.primary.main
+        }
+    },
+    button: {
+        color: colors.blueGrey[800],
+        padding: '10px 8px',
+        justifyContent: 'center',
+        textTransform: 'none',
+        letterSpacing: 0,
+        width: '100%',
+        fontWeight: theme.typography.fontWeightMedium
+    },
+    item: {
         display: 'inline-block',
-        marginTop: '30vh',
+        paddingTop: 0,
+        paddingBottom: 0
+    },
+    icon: {
+        color: theme.palette.icon,
+        width: 24,
+        height: 24,
+        display: 'flex',
+        alignItems: 'center',
+        marginRight: theme.spacing(1)
     },
 }));
 
-const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
+const visualizeNumber = (phoneNumberString) => {
+    const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+    }
+    return null
+}
+
+const LeftList = ({ setSelectedChat, selectedChat, data, className, ...rest }) => {
 
     const classes = useStyles();
 
-    const isLoading = useSelector(({ loading }) => loading.CHAT_GET);
-    const isGet = useSelector(({ chat }) => chat.isGet);
-    const data = useSelector(({ chat }) => chat.data);
-
-    const [onGet] = useActions(
-        [getRequest],
-        []
-    );
-
-    useEffect(() => {
-        onGet();
-    }, []);
-
-    useEffect(() => {
-        Object.keys(data).map(key => {
-            console.log(data[key]);
-        });
-    }, [data]);
+    console.log("LeftList", selectedChat);
 
     return (
         <div
@@ -80,27 +101,39 @@ const LeftList = ({ conversations, updateSelect, className, ...rest }) => {
                         placeholder="Search user"
                     />
                 </div>
-
-                {isLoading
-                    ? <CircularProgress color="primary" size={50} className={classes.loading} />
-                    : isGet ?
-                        <List>
-                            {data.length > 0 && Object.keys(data).map((conversation, key) => {
-                                return (
-                                    <ListItem button key={conversation.id} onClick={(to) => console.log("clicked", to)} >
-                                        <ListItemText primary={conversation.to} />
-                                    </ListItem>
-                                );
-                            })}
-                        </List>
-                        : <div className={classes.loadingError}>
-                            <Typography variant="h1">Connection Error</Typography>
-                        </div>}
-
+                <List
+                    className={classes.list}
+                >
+                    {Object.keys(data).map(key => (
+                        <React.Fragment key={data[key].id}>
+                            <ListItem
+                                className={classes.item}
+                                disableGutters
+                                key={data[key].id}
+                            >
+                                {selectedChat === key
+                                    ? (<Button
+                                        className={classes.active}
+                                        onClick={() => setSelectedChat(key)}
+                                    >
+                                        <div className={classes.icon}>{data[key].id}</div>
+                                        {visualizeNumber(data[key].to)}
+                                    </Button>)
+                                    : (<Button
+                                        className={classes.button}
+                                        onClick={() => setSelectedChat(key)}
+                                    >
+                                        <div className={classes.icon}>{data[key].id}</div>
+                                        {visualizeNumber(data[key].to)}
+                                    </Button>)}
+                            </ListItem>
+                        </React.Fragment>
+                    ))}
+                </List>
             </div>
-        </div>
+        </div >
     );
 
 }
 
-export default LeftList;
+export default React.memo(LeftList);

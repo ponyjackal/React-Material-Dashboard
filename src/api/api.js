@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import qs from 'qs';
 
 const makeAPI = () => {
     const token = localStorage.getItem('token');

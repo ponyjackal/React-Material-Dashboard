@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import clsx from 'clsx';
 import {
-    Paper,
     List,
     ListItem,
     ListItemText,
-    CircularProgress,
-    Typography
 } from '@material-ui/core';
-import useActions from './../../../lib/useActions';
-import { getRequest } from './../../../redux/message/actions';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -43,41 +36,23 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Message = ({ selectedChat }) => {
+const Message = ({ data, selectedChat }) => {
     const classes = useStyles();
 
-    const isLoading = useSelector(({ loading }) => loading.MESSAGE_GET);
-    const isGet = useSelector(({ message }) => message.isGet);
-    const data = useSelector(({ message }) => message.data);
-
-    const [onGet] = useActions(
-        [getRequest],
-        []
-    );
-
-    useEffect(() => {
-        onGet(selectedChat);
-    }, []);
+    console.log("Message", selectedChat);
 
     return (
         <div className={classes.root}>
             <div className={classes.content}>
-                {isLoading
-                    ? <CircularProgress color="primary" size={50} className={classes.loading} />
-                    : isGet ?
-                        <List>
-                            {data.length && data.map(({ ID }) =>
-                                <ListItem button key={ID} onClick={(ID) => console.log("clicked", ID)} >
-                                    <ListItemText primary={ID} />
-                                </ListItem>
-                            )}
-                        </List>
-                        : <div className={classes.loadingError}>
-                            <Typography variant="h1">Connection Error</Typography>
-                        </div>}
-
+                <List>
+                    {data[selectedChat].messages && data[selectedChat].messages.map(message =>
+                        <ListItem button key={message.id} onClick={(id) => console.log("clicked", message.id)} >
+                            <ListItemText primary={message.message} />
+                        </ListItem>
+                    )}
+                </List>
             </div>
-        </div>
+        </div >
     );
 }
 

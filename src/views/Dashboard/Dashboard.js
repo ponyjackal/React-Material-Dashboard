@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -12,10 +12,10 @@ import {
   TotalUsers,
   TasksProgress,
   TotalProfit,
-  LatestSales,
-  UsersByDevice,
-  LatestProducts,
-  LatestOrders,
+  // LatestSales,
+  // UsersByDevice,
+  // LatestProducts,
+  // LatestOrders,
 } from './components';
 
 import useActions from './../../lib/useActions';
@@ -61,7 +61,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     onGet();
-  }, []);
+  }, [onGet]);
 
   return (
     <div className={classes.root}>

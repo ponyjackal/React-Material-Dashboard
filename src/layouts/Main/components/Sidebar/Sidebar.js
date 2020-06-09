@@ -3,20 +3,15 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
-import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import CastIcon from '@material-ui/icons/Cast';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 
-import { Profile, SidebarNav, UpgradePlan } from './components';
+import { Profile, SidebarNav, /*UpgradePlan*/ } from './components';
 
 const useStyles = makeStyles(theme => ({
   drawer: {

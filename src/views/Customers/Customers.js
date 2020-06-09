@@ -1,12 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import {
-  Typography
-} from '@material-ui/core';
 
 import { CustomersToolbar, CustomersTable } from './components';
-
-import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
   root: {
