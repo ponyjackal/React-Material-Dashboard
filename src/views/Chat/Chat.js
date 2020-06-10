@@ -50,7 +50,9 @@ const Chat = () => {
     const isLoading = useSelector(({ loading }) => loading.CHAT_GET);
     const isGet = useSelector(({ chat }) => chat.isGet);
     const data = useSelector(({ chat }) => chat.data);
+
     const [selectedChat, setSelectedChat] = useState(0);
+    const [status, setStatus] = useState([]);
 
     const [onGet] = useActions(
         [getRequest],
@@ -61,7 +63,36 @@ const Chat = () => {
         onGet();
     }, [onGet]);
 
+    useEffect(() => {
+        let tempStatus = [];
+        if (data) {
+            tempStatus = Object.keys(data).map(key => {
+                const messages = data[key].messages;
+                let isRead = true;
+                messages.forEach(message => {
+                    if (message.read_at === null) {
+                        isRead = false;
+                        return false;
+                    }
+                });
+                return isRead;
+            });
+            setStatus(tempStatus);
+        }
+    }, [isGet, data]);
+
     console.log("Chat", selectedChat);
+
+    const onSelect = (index) => {
+        let tempStatus = status.map((value, key) => {
+            if (index == key)
+                return true;
+            else
+                return value;
+        });
+        setStatus(tempStatus);
+        setSelectedChat(index);
+    }
     return (
         <div className={classes.root}>
             <Card className={classes.content}>
@@ -79,7 +110,7 @@ const Chat = () => {
                                 xl={3}
                                 xs={3}
                             >
-                                <LeftList data={data} setSelectedChat={setSelectedChat} selectedChat={selectedChat} />
+                                <LeftList data={data} onSelect={onSelect} selectedChat={selectedChat} status={status} />
                             </Grid>
                             <Grid
                                 item

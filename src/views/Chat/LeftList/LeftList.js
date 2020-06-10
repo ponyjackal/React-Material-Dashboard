@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import {
@@ -7,8 +7,8 @@ import {
     Button,
     colors,
 } from '@material-ui/core';
-import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
-import MarkunreadIcon from '@material-ui/icons/Markunread';
+import EmailIcon from '@material-ui/icons/Email';
+import DraftsIcon from '@material-ui/icons/Drafts';
 
 import { SearchInput } from 'components';
 
@@ -83,6 +83,9 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         marginRight: theme.spacing(1)
     },
+    unRead: {
+        background: '#eee',
+    }
 }));
 
 const visualizeNumber = (phoneNumberString) => {
@@ -94,11 +97,19 @@ const visualizeNumber = (phoneNumberString) => {
     return null
 }
 
-const LeftList = ({ setSelectedChat, selectedChat, data, className, ...rest }) => {
+const LeftList = ({ onSelect, selectedChat, data, status, className, ...rest }) => {
 
     const classes = useStyles();
 
+    const [search, setSearch] = useState('');
+
     console.log("LeftList", selectedChat);
+
+    const onChange = (event) => {
+        const text = event.target.value;
+        console.log(event.target.value);
+        setSearch(text);
+    }
 
     return (
         <div
@@ -110,36 +121,39 @@ const LeftList = ({ setSelectedChat, selectedChat, data, className, ...rest }) =
                     <SearchInput
                         className={classes.searchInput}
                         placeholder="Search user"
+                        onChange={onChange}
                     />
                 </div>
                 <List
                     className={classes.list}
                 >
-                    {Object.keys(data).map(key => (
-                        <React.Fragment key={data[key].id}>
-                            <ListItem
-                                className={classes.item}
-                                disableGutters
-                                key={data[key].id}
-                            >
-                                {selectedChat === key
-                                    ? (<Button
-                                        className={classes.active}
-                                        onClick={() => setSelectedChat(key)}
-                                    >
-                                        <div className={classes.icon}><MarkunreadIcon /></div>
-                                        {visualizeNumber(data[key].to)}
-                                    </Button>)
-                                    : (<Button
-                                        className={classes.button}
-                                        onClick={() => setSelectedChat(key)}
-                                    >
-                                        <div className={classes.icon}><MarkunreadIcon /></div>
-                                        {visualizeNumber(data[key].to)}
-                                    </Button>)}
-                            </ListItem>
-                        </React.Fragment>
-                    ))}
+                    {Object.keys(data).map(key => {
+                        if (data[key].to.includes(search)) {
+                            return (<React.Fragment key={data[key].id}>
+                                <ListItem
+                                    className={classes.item}
+                                    disableGutters
+                                    key={data[key].id}
+                                >
+                                    {selectedChat === key
+                                        ? (<Button
+                                            className={classes.active}
+                                            onClick={() => onSelect(key)}
+                                        >
+                                            <div className={classes.icon}>{status[key] ? <DraftsIcon /> : <EmailIcon />}</div>
+                                            {visualizeNumber(data[key].to)}
+                                        </Button>)
+                                        : (<Button
+                                            className={clsx(classes.button, !status[key] && classes.unRead)}
+                                            onClick={() => onSelect(key)}
+                                        >
+                                            <div className={classes.icon}>{status[key] ? <DraftsIcon /> : <EmailIcon />}</div>
+                                            {visualizeNumber(data[key].to)}
+                                        </Button>)}
+                                </ListItem>
+                            </React.Fragment>)
+                        }
+                    })}
                 </List>
             </div>
         </div >

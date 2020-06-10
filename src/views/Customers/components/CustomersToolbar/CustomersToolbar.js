@@ -119,9 +119,9 @@ const CustomersToolbar = props => {
           });
         }
       });
-      // console.log("customer data", data);
       while (data.length > 0) {
-        const chunk = data.splice(0, 10000)
+        const chunk = data.splice(0, 10000);
+        console.log("data", chunk);
         await onImport(chunk);
       }
     }
