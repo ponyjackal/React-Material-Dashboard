@@ -123,10 +123,12 @@ const Message = ({ data, selectedChat }) => {
 
     const handleSubmit = () => {
         console.log("submit");
-        onSend({
-            id: selectedChat,
-            message: text
-        });
+        if (selectedChat >= 0) {
+            onSend({
+                id: selectedChat,
+                message: text
+            });
+        }
     }
 
     const handleUnsubscribe = () => {

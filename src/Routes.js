@@ -27,7 +27,7 @@ const Routes = () => {
       <Redirect
         exact
         from="/"
-        to="/dashboard"
+        to="/schedule"
       />
       <PrivateRouteWithLayout
         component={DashboardView}
