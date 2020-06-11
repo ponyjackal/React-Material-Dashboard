@@ -42,3 +42,6 @@ export const getChat = () =>
 
 export const getMessages = (id) =>
     makeAPI().get(`api/getMessages/${id}`)
+
+export const sendMessage = ({ id, message }) =>
+    makeAPI().post(`api/getMessages/${id}`, { message })

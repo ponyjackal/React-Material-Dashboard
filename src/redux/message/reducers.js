@@ -1,8 +1,9 @@
 import { handleActions } from 'redux-actions';
-import { GET_SUCCESS, GET_FAILED } from './constants';
+import { GET_SUCCESS, GET_FAILED, SEND_SUCCESS, SEND_FAILED } from './constants';
 
 const InitialState = {
     isGet: false,
+    isSent: false,
     data: []
 }
 
@@ -17,6 +18,14 @@ const dashboard = handleActions(
             ...state,
             data: [],
             isGet: false,
+        }),
+        [SEND_SUCCESS]: (state) => ({
+            ...state,
+            isSent: true,
+        }),
+        [SEND_FAILED]: (state) => ({
+            ...state,
+            isSent: false,
         }),
     },
     InitialState

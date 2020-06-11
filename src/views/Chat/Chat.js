@@ -51,7 +51,7 @@ const Chat = () => {
     const isGet = useSelector(({ chat }) => chat.isGet);
     const data = useSelector(({ chat }) => chat.data);
 
-    const [selectedChat, setSelectedChat] = useState(0);
+    const [selectedChat, setSelectedChat] = useState(-1);
     const [status, setStatus] = useState([]);
 
     const [onGet] = useActions(
@@ -61,7 +61,7 @@ const Chat = () => {
 
     useEffect(() => {
         onGet();
-    }, [onGet]);
+    }, []);
 
     useEffect(() => {
         let tempStatus = [];

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import {
@@ -8,6 +9,9 @@ import {
     TextField,
     Button,
 } from '@material-ui/core';
+
+import useActions from './../../../lib/useActions';
+import { sendRequest } from './../../../redux/message/actions';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -51,6 +55,7 @@ const useStyles = makeStyles(theme => ({
         '& p': {
             padding: theme.spacing(1),
             borderRadius: '5px',
+            fontSize: '16px',
             "&:hover": {
                 background: "#ccc",
             }
@@ -78,11 +83,15 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'stretch',
     },
     sendButton: {
-        paddingBottom: theme.spacing(1),
-        paddingTop: theme.spacing(2),
-        width: 100,
-        "& .button": {
-            height: '100%',
+        padding: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+    },
+    unsubscribe: {
+        background: theme.palette.error.light,
+        '&:hover': {
+            background: theme.palette.error.main,
         }
     }
 }));
@@ -103,21 +112,37 @@ const Message = ({ data, selectedChat }) => {
 
     const [text, setText] = useState('');
 
+    const isLoading = useSelector(({ loading }) => loading.MESSAGE_SEND);
+    const isSent = useSelector(({ message }) => message.isSent);
+    const [onSend] = useActions(
+        [sendRequest],
+        []
+    );
+
     console.log("Message", selectedChat);
 
     const handleSubmit = () => {
         console.log("submit");
+        onSend({
+            id: selectedChat,
+            message: text
+        });
+    }
+
+    const handleUnsubscribe = () => {
+        console.log("unsubscribe");
     }
 
     const handleChange = (event) => {
         console.log(event.target.value);
+        setText(event.target.value);
     }
 
     return (
         <div className={classes.root}>
             <div className={classes.content}>
                 <List className={classes.list}>
-                    {data[selectedChat].messages && data[selectedChat].messages.map(message =>
+                    {data[selectedChat] && data[selectedChat].messages && data[selectedChat].messages.map(message =>
                         <MessageComponent key={message.id} message={message} style={message.direction === 'outbound' ? classes.outBound : classes.inBound} />
                     )}
                 </List>
@@ -142,6 +167,11 @@ const Message = ({ data, selectedChat }) => {
                             className={classes.button}
                             onClick={() => handleSubmit()}
                         >SEND</Button>
+                        <Button
+                            variant="contained"
+                            className={classes.unsubscribe}
+                            onClick={() => handleUnsubscribe()}
+                        >UNSUBSCRIBE</Button>
                     </div>
                 </form>
             </div>
