@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import {
@@ -9,9 +8,6 @@ import {
     TextField,
     Button,
 } from '@material-ui/core';
-
-import useActions from './../../../lib/useActions';
-import { sendRequest } from './../../../redux/message/actions';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -107,33 +103,13 @@ const MessageComponent = ({ message, style }) => {
     )
 }
 
-const Message = ({ data, selectedChat }) => {
+const Message = ({ data, selectedChat, handleSubmit, handleUnsubscribe }) => {
     const classes = useStyles();
 
     const [text, setText] = useState('');
 
-    const isLoading = useSelector(({ loading }) => loading.MESSAGE_SEND);
-    const isSent = useSelector(({ message }) => message.isSent);
-    const [onSend] = useActions(
-        [sendRequest],
-        []
-    );
 
     console.log("Message", selectedChat);
-
-    const handleSubmit = () => {
-        console.log("submit");
-        if (selectedChat >= 0) {
-            onSend({
-                id: selectedChat,
-                message: text
-            });
-        }
-    }
-
-    const handleUnsubscribe = () => {
-        console.log("unsubscribe");
-    }
 
     const handleChange = (event) => {
         console.log(event.target.value);
@@ -167,7 +143,7 @@ const Message = ({ data, selectedChat }) => {
                             color="primary"
                             variant="contained"
                             className={classes.button}
-                            onClick={() => handleSubmit()}
+                            onClick={() => handleSubmit(text)}
                         >SEND</Button>
                         <Button
                             variant="contained"

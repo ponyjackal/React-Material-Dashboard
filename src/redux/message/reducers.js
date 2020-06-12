@@ -1,9 +1,19 @@
 import { handleActions } from 'redux-actions';
-import { GET_SUCCESS, GET_FAILED, SEND_SUCCESS, SEND_FAILED } from './constants';
+import {
+    GET_SUCCESS,
+    GET_FAILED,
+    SEND_SUCCESS,
+    SEND_FAILED,
+    UNSUBSCRIBE_SUCCESS,
+    UNSUBSCRIBE_FAILED,
+    ARCHIVE_SUCCESS,
+    ARCHIVE_FAILED,
+} from './constants';
 
 const InitialState = {
     isGet: false,
     isSent: false,
+    isArchived: false,
     data: []
 }
 
@@ -26,6 +36,22 @@ const dashboard = handleActions(
         [SEND_FAILED]: (state) => ({
             ...state,
             isSent: false,
+        }),
+        [UNSUBSCRIBE_SUCCESS]: (state) => ({
+            ...state,
+            isSent: true,
+        }),
+        [UNSUBSCRIBE_FAILED]: (state) => ({
+            ...state,
+            isSent: false,
+        }),
+        [ARCHIVE_SUCCESS]: (state) => ({
+            ...state,
+            isArchived: true,
+        }),
+        [ARCHIVE_FAILED]: (state) => ({
+            ...state,
+            isArchived: false,
         }),
     },
     InitialState

@@ -1,12 +1,30 @@
 import { takeLatest, takeEvery } from 'redux-saga/effects';
-import { GET_REQUEST, getActionType, SEND_REQUEST, sendActionType } from './constants';
+import {
+    GET_REQUEST,
+    getActionType,
+    SEND_REQUEST,
+    sendActionType,
+    UNSUBSCRIBE_REQUEST,
+    unsubscribeActionType,
+    ARCHIVE_REQUEST,
+    archiveActionType,
+} from './constants';
 import createRequestSaga from './../../lib/createRequestSaga';
-import { getMessagesAPI, sendMessageAPI } from './../../api'
+import {
+    getMessagesAPI,
+    sendMessageAPI,
+    unsubscribeAPI,
+    archiveAPI,
+} from './../../api'
 
 const getSaga = createRequestSaga(getActionType, getMessagesAPI);
 const sendSaga = createRequestSaga(sendActionType, sendMessageAPI);
+const unsubscribeSaga = createRequestSaga(unsubscribeActionType, unsubscribeAPI);
+const archiveSaga = createRequestSaga(archiveActionType, archiveAPI);
 
 export default function* messagedSaga() {
     yield takeLatest(GET_REQUEST, getSaga);
     yield takeEvery(SEND_REQUEST, sendSaga);
+    yield takeLatest(UNSUBSCRIBE_REQUEST, unsubscribeSaga);
+    yield takeLatest(ARCHIVE_REQUEST, archiveSaga);
 }

@@ -11,7 +11,7 @@ import LeftList from './LeftList';
 import Message from './Message';
 import useActions from './../../lib/useActions';
 import { getRequest } from './../../redux/chat/actions';
-
+import { sendRequest, unsubscribeRequest, archiveRequest } from './../../redux/message/actions';
 const useStyles = makeStyles(theme => ({
     root: {
         padding: theme.spacing(3)
@@ -54,6 +54,24 @@ const Chat = () => {
     const [selectedChat, setSelectedChat] = useState(-1);
     const [status, setStatus] = useState([]);
 
+    const isSending = useSelector(({ loading }) => loading.MESSAGE_SEND);
+    const isSent = useSelector(({ message }) => message.isSent);
+
+    const [onSend] = useActions(
+        [sendRequest],
+        []
+    );
+
+    const [onUnsubscribe] = useActions(
+        [unsubscribeRequest],
+        []
+    );
+
+    const [onArchive] = useActions(
+        [archiveRequest],
+        []
+    );
+
     const [onGet] = useActions(
         [getRequest],
         []
@@ -93,6 +111,36 @@ const Chat = () => {
         setStatus(tempStatus);
         setSelectedChat(index);
     }
+
+    const onRemove = (index) => {
+        console.log("remove ", index);
+
+        if (selectedChat >= 0) {
+            onArchive({
+                id: selectedChat,
+            });
+        }
+    }
+
+    const handleSubmit = (text) => {
+        console.log("submit");
+        if (selectedChat >= 0) {
+            onSend({
+                id: selectedChat,
+                message: text
+            });
+        }
+    }
+
+    const handleUnsubscribe = () => {
+        console.log("unsubscribe");
+        if (selectedChat >= 0) {
+            onUnsubscribe({
+                id: selectedChat,
+            });
+        }
+    }
+
     return (
         <div className={classes.root}>
             <Card className={classes.content}>
@@ -110,7 +158,7 @@ const Chat = () => {
                                 xl={3}
                                 xs={3}
                             >
-                                <LeftList data={data} onSelect={onSelect} selectedChat={selectedChat} status={status} />
+                                <LeftList data={data} onSelect={onSelect} onRemove={onRemove} selectedChat={selectedChat} status={status} />
                             </Grid>
                             <Grid
                                 item
@@ -119,7 +167,7 @@ const Chat = () => {
                                 xl={9}
                                 xs={9}
                             >
-                                <Message data={data} selectedChat={selectedChat} />
+                                <Message data={data} selectedChat={selectedChat} handleSubmit={handleSubmit} handleUnsubscribe={handleUnsubscribe} />
                             </Grid>
                         </Grid>
                         : <div className={classes.loadingError}>

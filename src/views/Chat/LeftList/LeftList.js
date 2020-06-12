@@ -9,11 +9,14 @@ import {
 } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import DraftsIcon from '@material-ui/icons/Drafts';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { SearchInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
-    root: {},
+    root: {
+        borderRight: '1px dotted',
+    },
     row: {
         height: '42px',
         display: 'flex',
@@ -49,7 +52,7 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.main,
         fontWeight: theme.typography.fontWeightMedium,
         padding: '10px 8px',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         textTransform: 'none',
         letterSpacing: 0,
         width: '100%',
@@ -61,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     button: {
         color: colors.blueGrey[800],
         padding: '10px 8px',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         textTransform: 'none',
         letterSpacing: 0,
         width: '100%',
@@ -97,7 +100,7 @@ const visualizeNumber = (phoneNumberString) => {
     return null
 }
 
-const LeftList = ({ onSelect, selectedChat, data, status, className, ...rest }) => {
+const LeftList = ({ onSelect, onRemove, selectedChat, data, status, className, ...rest }) => {
 
     const classes = useStyles();
 
@@ -142,6 +145,7 @@ const LeftList = ({ onSelect, selectedChat, data, status, className, ...rest }) 
                                         >
                                             <div className={classes.icon}>{status[key] ? <DraftsIcon /> : <EmailIcon />}</div>
                                             {visualizeNumber(data[key].to)}
+                                            <div className={classes.icon} onClick={() => onRemove(key)}><DeleteIcon /></div>
                                         </Button>)
                                         : (<Button
                                             className={clsx(classes.button, !status[key] && classes.unRead)}

@@ -44,4 +44,10 @@ export const getMessages = (id) =>
     makeAPI().get(`api/getMessages/${id}`)
 
 export const sendMessage = ({ id, message }) =>
-    makeAPI().post(`api/getMessages/${id}`, { message })
+    makeAPI().post(`api/sendMessage/${id}`, { message })
+
+export const unsubscribe = ({ id }) =>
+    makeAPI().post(`api/unsubscribe/${id}`)
+
+export const archive = ({ id }) =>
+    makeAPI().post(`api/archive/${id}`)

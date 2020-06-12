@@ -82,8 +82,6 @@ const CustomersTable = props => {
     []
   );
 
-
-
   const getCustomers = (rowPerPage = 10, page = 1) => {
     onGet({ rowPerPage, page });
   }
