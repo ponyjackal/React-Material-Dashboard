@@ -86,6 +86,7 @@ const useStyles = makeStyles(theme => ({
     },
     unsubscribe: {
         background: theme.palette.error.light,
+        color: 'white',
         '&:hover': {
             background: theme.palette.error.main,
         }

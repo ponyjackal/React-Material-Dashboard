@@ -103,23 +103,22 @@ const Chat = () => {
 
     const onSelect = (index) => {
         let tempStatus = status.map((value, key) => {
-            if (index == key)
-                return true;
-            else
-                return value;
+            return (index == key) ? true : value;
         });
         setStatus(tempStatus);
         setSelectedChat(index);
     }
 
     const onRemove = (index) => {
-        console.log("remove ", index);
-
-        if (selectedChat >= 0) {
-            onArchive({
-                id: selectedChat,
-            });
-        }
+        let tempStatus = Object.keys(data).filter((value, key) => {
+            return key == index ? false : value;
+        });
+        console.log("remove ", tempStatus);
+        // if (selectedChat >= 0) {
+        //     onArchive({
+        //         id: selectedChat,
+        //     });
+        // }
     }
 
     const handleSubmit = (text) => {
