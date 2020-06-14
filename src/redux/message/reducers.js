@@ -8,12 +8,15 @@ import {
     UNSUBSCRIBE_FAILED,
     ARCHIVE_SUCCESS,
     ARCHIVE_FAILED,
+    READ_SUCCESS,
+    READ_FAILED,
 } from './constants';
 
 const InitialState = {
     isGet: false,
     isSent: false,
     isArchived: false,
+    isRead: false,
     data: []
 }
 
@@ -52,6 +55,14 @@ const dashboard = handleActions(
         [ARCHIVE_FAILED]: (state) => ({
             ...state,
             isArchived: false,
+        }),
+        [READ_SUCCESS]: (state) => ({
+            ...state,
+            isRead: true,
+        }),
+        [READ_FAILED]: (state) => ({
+            ...state,
+            isRead: false,
         }),
     },
     InitialState

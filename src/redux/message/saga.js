@@ -8,6 +8,8 @@ import {
     unsubscribeActionType,
     ARCHIVE_REQUEST,
     archiveActionType,
+    READ_REQUEST,
+    readActionType,
 } from './constants';
 import createRequestSaga from './../../lib/createRequestSaga';
 import {
@@ -15,16 +17,19 @@ import {
     sendMessageAPI,
     unsubscribeAPI,
     archiveAPI,
+    markAsReadAPI,
 } from './../../api'
 
 const getSaga = createRequestSaga(getActionType, getMessagesAPI);
 const sendSaga = createRequestSaga(sendActionType, sendMessageAPI);
 const unsubscribeSaga = createRequestSaga(unsubscribeActionType, unsubscribeAPI);
 const archiveSaga = createRequestSaga(archiveActionType, archiveAPI);
+const markAsReadSaga = createRequestSaga(readActionType, markAsReadAPI);
 
 export default function* messagedSaga() {
     yield takeLatest(GET_REQUEST, getSaga);
     yield takeEvery(SEND_REQUEST, sendSaga);
     yield takeLatest(UNSUBSCRIBE_REQUEST, unsubscribeSaga);
     yield takeLatest(ARCHIVE_REQUEST, archiveSaga);
+    yield takeLatest(READ_REQUEST, markAsReadSaga);
 }

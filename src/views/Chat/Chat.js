@@ -11,7 +11,7 @@ import LeftList from './LeftList';
 import Message from './Message';
 import useActions from './../../lib/useActions';
 import { getRequest } from './../../redux/chat/actions';
-import { sendRequest, unsubscribeRequest, archiveRequest } from './../../redux/message/actions';
+import { sendRequest, unsubscribeRequest, archiveRequest, readRequest } from './../../redux/message/actions';
 const useStyles = makeStyles(theme => ({
     root: {
         padding: theme.spacing(3)
@@ -72,6 +72,11 @@ const Chat = () => {
         []
     );
 
+    const [onRead] = useActions(
+        [readRequest],
+        []
+    );
+
     const [onGet] = useActions(
         [getRequest],
         []
@@ -102,6 +107,7 @@ const Chat = () => {
     console.log("Chat", selectedChat);
 
     const onSelect = (index) => {
+        onRead(data[index].id);
         let tempStatus = status.map((value, key) => {
             return (index == key) ? true : value;
         });

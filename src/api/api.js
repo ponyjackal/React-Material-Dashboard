@@ -51,3 +51,6 @@ export const unsubscribe = ({ id }) =>
 
 export const archive = ({ id }) =>
     makeAPI().post(`api/archive/${id}`)
+
+export const markAsRead = ({ id }) =>
+    makeAPI().post(`api/markAsRead/${id}`)

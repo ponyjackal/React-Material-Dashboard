@@ -12,6 +12,9 @@ import {
     ARCHIVE_REQUEST,
     ARCHIVE_SUCCESS,
     ARCHIVE_FAILED,
+    READ_REQUEST,
+    READ_SUCCESS,
+    READ_FAILED,
 } from './constants';
 
 export const getRequest = createAction(GET_REQUEST);
@@ -29,4 +32,8 @@ export const unsubscribeFailed = createAction(UNSUBSCRIBE_FAILED);
 export const archiveRequest = createAction(ARCHIVE_REQUEST, ({ id }) => ({ id }));
 export const archiveSuccess = createAction(ARCHIVE_SUCCESS);
 export const archiveFailed = createAction(ARCHIVE_FAILED);
+
+export const readRequest = createAction(READ_REQUEST, ({ id }) => ({ id }));
+export const readSuccess = createAction(READ_SUCCESS);
+export const readFailed = createAction(READ_FAILED);
 

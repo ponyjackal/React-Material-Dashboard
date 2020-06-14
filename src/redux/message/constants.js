@@ -19,3 +19,8 @@ export const archiveActionType = 'MESSAGE_ARCHIVE';
 export const [ARCHIVE_REQUEST, ARCHIVE_SUCCESS, ARCHIVE_FAILED] = createRequestActionTypes(
     archiveActionType
 );
+
+export const readActionType = 'MESSAGE_READ';
+export const [READ_REQUEST, READ_SUCCESS, READ_FAILED] = createRequestActionTypes(
+    readActionType
+);
