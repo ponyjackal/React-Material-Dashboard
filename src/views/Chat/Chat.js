@@ -107,7 +107,11 @@ const Chat = () => {
     console.log("Chat", selectedChat);
 
     const onSelect = (index) => {
-        onRead(data[index].id);
+        if (status[index] == false) {
+            onRead({
+                id: data[index].id
+            });
+        }
         let tempStatus = status.map((value, key) => {
             return (index == key) ? true : value;
         });
