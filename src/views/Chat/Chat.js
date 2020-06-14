@@ -89,8 +89,8 @@ const Chat = () => {
     useEffect(() => {
         let tempStatus = [];
         if (data) {
-            tempStatus = Object.keys(data).map(key => {
-                const messages = data[key].messages;
+            tempStatus = data.map(conversation => {
+                const messages = conversation.messages;
                 let isRead = true;
                 messages.forEach(message => {
                     if (message.read_at === null) {
@@ -120,7 +120,7 @@ const Chat = () => {
     }
 
     const onRemove = (index) => {
-        let tempStatus = Object.keys(data).filter((value, key) => {
+        let tempStatus = data.filter((value, key) => {
             return key == index ? false : value;
         });
         console.log("remove ", tempStatus);

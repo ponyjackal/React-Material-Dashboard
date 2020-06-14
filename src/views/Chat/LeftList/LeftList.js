@@ -130,13 +130,13 @@ const LeftList = ({ onSelect, onRemove, selectedChat, data, status, className, .
                 <List
                     className={classes.list}
                 >
-                    {Object.keys(data).map(key => {
-                        if (data[key].to.includes(search)) {
-                            return (<React.Fragment key={data[key].id}>
+                    {data.map((conversation, key) => {
+                        if (conversation.to.includes(search)) {
+                            return (<React.Fragment key={conversation.id}>
                                 <ListItem
                                     className={classes.item}
                                     disableGutters
-                                    key={data[key].id}
+                                    key={conversation.id}
                                 >
                                     {selectedChat === key
                                         ? (<Button
@@ -144,7 +144,7 @@ const LeftList = ({ onSelect, onRemove, selectedChat, data, status, className, .
                                             onClick={() => onSelect(key)}
                                         >
                                             <div className={classes.icon}>{status[key] ? <DraftsIcon /> : <EmailIcon />}</div>
-                                            {visualizeNumber(data[key].to)}
+                                            {visualizeNumber(conversation.to)}
                                             <div className={classes.icon} onClick={() => onRemove(key)}><DeleteIcon /></div>
                                         </Button>)
                                         : (<Button
@@ -152,7 +152,7 @@ const LeftList = ({ onSelect, onRemove, selectedChat, data, status, className, .
                                             onClick={() => onSelect(key)}
                                         >
                                             <div className={classes.icon}>{status[key] ? <DraftsIcon /> : <EmailIcon />}</div>
-                                            {visualizeNumber(data[key].to)}
+                                            {visualizeNumber(conversation.to)}
                                         </Button>)}
                                 </ListItem>
                             </React.Fragment>)
