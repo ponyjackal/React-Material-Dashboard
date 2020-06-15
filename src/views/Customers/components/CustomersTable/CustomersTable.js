@@ -90,6 +90,9 @@ const CustomersTable = props => {
     getCustomers();
   }, []);
 
+  const handleRowClick = (index) => {
+    console.log("row clicked", customers.data[index]);
+  }
   const handleSelectAll = event => {
     // const { customers } = props;
 
@@ -145,6 +148,7 @@ const CustomersTable = props => {
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={rowsPerPageOptions}
         page={page}
+        handleRowClick={handleRowClick}
         handleSelectAll={handleSelectAll}
         handleSelectOne={handleSelectOne}
         handlePageChange={handlePageChange}

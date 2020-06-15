@@ -14,6 +14,7 @@ import MUIDataTable from 'mui-datatables';
 import DataTable from './../../../../components/DataTable';
 import useActions from './../../../../lib/useActions';
 import { getRequest } from './../../../../redux/broadcast/actions';
+import BroadcastDialog from './../BroadcastDialog';
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,6 +38,16 @@ const BroadcastsTable = props => {
     const [selectedBroadcasts, setSelectedBroadcasts] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const rowsPerPageOptions = [10, 50, 100];
 
@@ -75,6 +86,11 @@ const BroadcastsTable = props => {
             label: 'Date'
         },
     ];
+
+    const handleRowClick = (index) => {
+        setOpen(true);
+    }
+
     const handleSelectAll = event => {
         // const { broadcasts } = props;
 
@@ -126,18 +142,23 @@ const BroadcastsTable = props => {
                         {isLoading
                             ? <CircularProgress color="primary" size={100} className={classes.loading} />
                             : isGet
-                                ? <DataTable
-                                    data={broadcasts.data}
-                                    columns={columns}
-                                    count={broadcasts.total}
-                                    selectedData={selectedBroadcasts}
-                                    rowsPerPage={rowsPerPage}
-                                    rowsPerPageOptions={rowsPerPageOptions}
-                                    page={page}
-                                    handleSelectAll={handleSelectAll}
-                                    handleSelectOne={handleSelectOne}
-                                    handlePageChange={handlePageChange}
-                                    handleRowsPerPageChange={handleRowsPerPageChange} />
+                                ?
+                                <>
+                                    <DataTable
+                                        data={broadcasts.data}
+                                        columns={columns}
+                                        count={broadcasts.total}
+                                        selectedData={selectedBroadcasts}
+                                        rowsPerPage={rowsPerPage}
+                                        rowsPerPageOptions={rowsPerPageOptions}
+                                        page={page}
+                                        handleRowClick={handleRowClick}
+                                        handleSelectAll={handleSelectAll}
+                                        handleSelectOne={handleSelectOne}
+                                        handlePageChange={handlePageChange}
+                                        handleRowsPerPageChange={handleRowsPerPageChange} />
+                                    <BroadcastDialog open={open} handleClose={handleClose} />
+                                </>
                                 : <div className={classes.loadingError}>
                                     <Typography variant="h1">Connection Error</Typography>
                                     <img
@@ -157,7 +178,7 @@ const BroadcastsTable = props => {
 BroadcastsTable.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
-    broadcasts: PropTypes.array.isRequired
+    type: PropTypes.string.isRequired
 };
 
 export default BroadcastsTable;

@@ -40,6 +40,7 @@ const DataTable = props => {
         rowsPerPage,
         rowsPerPageOptions,
         page,
+        handleRowClick,
         handleSelectAll,
         handleSelectOne,
         handlePageChange,
@@ -47,6 +48,10 @@ const DataTable = props => {
         ...rest } = props;
 
     const classes = useStyles();
+
+    const onClick = (index) => {
+        console.log("row selected", data[index]);
+    }
 
     return (
         <Card
@@ -76,12 +81,13 @@ const DataTable = props => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {data.map(row => (
+                                {data.map((row, key) => (
                                     <TableRow
                                         className={classes.tableRow}
                                         hover
                                         key={row.id}
                                         selected={selectedData.indexOf(row.id) !== -1}
+                                        onClick={() => handleRowClick(key)}
                                     >
                                         <TableCell padding="checkbox">
                                             <Checkbox
