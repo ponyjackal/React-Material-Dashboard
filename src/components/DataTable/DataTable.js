@@ -23,6 +23,11 @@ const useStyles = makeStyles(theme => ({
     },
     actions: {
         justifyContent: 'flex-end'
+    },
+    tableRow: {
+        '&:hover': {
+            background: '#ccc !important',
+        }
     }
 }));
 

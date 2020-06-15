@@ -88,6 +88,14 @@ const useStyles = makeStyles(theme => ({
     },
     unRead: {
         background: '#eee',
+    },
+    removeIcon: {
+        color: theme.palette.error.main,
+        width: 24,
+        height: 24,
+        display: 'flex',
+        alignItems: 'center',
+        marginRight: theme.spacing(1)
     }
 }));
 
@@ -145,7 +153,7 @@ const LeftList = ({ onSelect, onRemove, selectedChat, data, status, className, .
                                         >
                                             <div className={classes.icon}>{status[key] ? <DraftsIcon /> : <EmailIcon />}</div>
                                             {visualizeNumber(conversation.to)}
-                                            <div className={classes.icon} onClick={() => onRemove(key)}><DeleteIcon /></div>
+                                            <div className={classes.removeIcon} onClick={() => onRemove(key)}><DeleteIcon /></div>
                                         </Button>)
                                         : (<Button
                                             className={clsx(classes.button, !status[key] && classes.unRead)}

@@ -124,11 +124,11 @@ const Chat = () => {
             return key == index ? false : value;
         });
         console.log("remove ", tempStatus);
-        // if (selectedChat >= 0) {
-        //     onArchive({
-        //         id: selectedChat,
-        //     });
-        // }
+        if (selectedChat >= 0) {
+            onArchive({
+                id: selectedChat,
+            });
+        }
     }
 
     const handleSubmit = (text) => {
