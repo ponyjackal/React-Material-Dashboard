@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -6,8 +7,13 @@ import { makeStyles } from '@material-ui/styles';
 import {
     Card,
     CardContent,
+    Typography,
+    CircularProgress
 } from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
+import DataTable from './../../../../components/DataTable';
+import useActions from './../../../../lib/useActions';
+import { getRequest } from './../../../../redux/broadcast/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,9 +26,32 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BroadcastsTable = props => {
-    const { className, broadcasts, title, ...rest } = props;
+    const { className, title, type, ...rest } = props;
 
     const classes = useStyles();
+
+    const isLoading = useSelector(({ loading }) => loading.BROADCAST_GET);
+    const isGet = useSelector(({ broadcast }) => broadcast.isGet);
+    const broadcasts = useSelector(({ broadcast }) => broadcast.broadcasts);
+
+    const [selectedBroadcasts, setSelectedBroadcasts] = useState([]);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [page, setPage] = useState(0);
+
+    const rowsPerPageOptions = [10, 50, 100];
+
+    const [onGet] = useActions(
+        [getRequest],
+        []
+    );
+
+    const getBroadcasts = (type = "scheduled", rowPerPage = 10, page = 1) => {
+        onGet({ type, rowPerPage, page });
+    }
+
+    useEffect(() => {
+        getBroadcasts(type);
+    }, []);
 
     const columns = [
         {
@@ -46,13 +75,78 @@ const BroadcastsTable = props => {
             label: 'Date'
         },
     ];
+    const handleSelectAll = event => {
+        // const { broadcasts } = props;
 
+        // let selectedBroadcasts;
+
+        // if (event.target.checked) {
+        //   selectedBroadcasts = broadcasts.data.map(customer => customer.id);
+        // } else {
+        //   selectedBroadcasts = [];
+        // }
+
+        // setSelectedBroadcasts(selectedBroadcasts);
+    };
+
+    const handleSelectOne = (event, id) => {
+        const selectedIndex = selectedBroadcasts.indexOf(id);
+        let newSelectedBroadcasts = [];
+
+        if (selectedIndex === -1) {
+            newSelectedBroadcasts = newSelectedBroadcasts.concat(selectedBroadcasts, id);
+        } else if (selectedIndex === 0) {
+            newSelectedBroadcasts = newSelectedBroadcasts.concat(selectedBroadcasts.slice(1));
+        } else if (selectedIndex === selectedBroadcasts.length - 1) {
+            newSelectedBroadcasts = newSelectedBroadcasts.concat(selectedBroadcasts.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelectedBroadcasts = newSelectedBroadcasts.concat(
+                selectedBroadcasts.slice(0, selectedIndex),
+                selectedBroadcasts.slice(selectedIndex + 1)
+            );
+        }
+
+        setSelectedBroadcasts(newSelectedBroadcasts);
+    };
+
+    const handlePageChange = (event, page) => {
+        getBroadcasts(type, rowsPerPage, page + 1);
+        setPage(page);
+    };
+
+    const handleRowsPerPageChange = event => {
+        getBroadcasts(type, event.target.value);
+        setRowsPerPage(event.target.value);
+    };
     return (
         <Card {...rest} className={clsx(classes.root, className)}>
             <CardContent className={classes.content}>
                 <PerfectScrollbar>
                     <div className={classes.inner}>
-                        <MUIDataTable data={broadcasts} columns={columns} />
+                        {isLoading
+                            ? <CircularProgress color="primary" size={100} className={classes.loading} />
+                            : isGet
+                                ? <DataTable
+                                    data={broadcasts.data}
+                                    columns={columns}
+                                    count={broadcasts.total}
+                                    selectedData={selectedBroadcasts}
+                                    rowsPerPage={rowsPerPage}
+                                    rowsPerPageOptions={rowsPerPageOptions}
+                                    page={page}
+                                    handleSelectAll={handleSelectAll}
+                                    handleSelectOne={handleSelectOne}
+                                    handlePageChange={handlePageChange}
+                                    handleRowsPerPageChange={handleRowsPerPageChange} />
+                                : <div className={classes.loadingError}>
+                                    <Typography variant="h1">Connection Error</Typography>
+                                    <img
+                                        alt="Under development"
+                                        className={classes.image}
+                                        src="/images/undraw_page_not_found_su7k.svg"
+                                    />
+                                </div>}
+
                     </div>
                 </PerfectScrollbar>
             </CardContent>

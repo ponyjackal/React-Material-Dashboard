@@ -6,6 +6,6 @@ export const addRequest = createAction(ADD_REQUEST, broadcast => broadcast);
 export const addSuccess = createAction(ADD_SUCCESS);
 export const addFailed = createAction(ADD_FAILED);
 
-export const getRequest = createAction(GET_REQUEST);
+export const getRequest = createAction(GET_REQUEST, ({ type, rowPerPage, page }) => ({ type, rowPerPage, page }));
 export const getSuccess = createAction(GET_SUCCESS);
 export const getFailed = createAction(GET_FAILED);
