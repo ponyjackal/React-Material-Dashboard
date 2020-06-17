@@ -40,6 +40,7 @@ const BroadcastsTable = props => {
     const [page, setPage] = useState(0);
 
     const [open, setOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(-1);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -88,6 +89,7 @@ const BroadcastsTable = props => {
     ];
 
     const handleRowClick = (index) => {
+        setSelectedRow(index);
         setOpen(true);
     }
 
@@ -157,7 +159,7 @@ const BroadcastsTable = props => {
                                         handleSelectOne={handleSelectOne}
                                         handlePageChange={handlePageChange}
                                         handleRowsPerPageChange={handleRowsPerPageChange} />
-                                    <BroadcastDialog open={open} handleClose={handleClose} />
+                                    <BroadcastDialog open={open} handleClose={handleClose} broadcast={broadcasts.data[selectedRow]} />
                                 </>
                                 : <div className={classes.loadingError}>
                                     <Typography variant="h1">Connection Error</Typography>

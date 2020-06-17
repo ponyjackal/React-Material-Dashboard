@@ -85,5 +85,12 @@ export default {
     letterSpacing: '0.33px',
     lineHeight: '13px',
     textTransform: 'uppercase'
-  }
+  },
+  fontFamily: [
+    'Nunito',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif'
+  ].join(','),
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import {
@@ -108,7 +108,13 @@ const Message = ({ data, selectedChat, handleSubmit, handleUnsubscribe }) => {
     const classes = useStyles();
 
     const [text, setText] = useState('');
+    const messagesEndRef = useRef(null);
 
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(scrollToBottom, [selectedChat]);
 
     console.log("Message", selectedChat);
 
@@ -124,6 +130,7 @@ const Message = ({ data, selectedChat, handleSubmit, handleUnsubscribe }) => {
                     {data[selectedChat] && data[selectedChat].messages && data[selectedChat].messages.map(message =>
                         <MessageComponent key={message.id} message={message} style={message.direction === 'outbound' ? classes.outBound : classes.inBound} />
                     )}
+                    <div ref={messagesEndRef} />
                 </List>
 
                 <form className={classes.sendMessage}>
