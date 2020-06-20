@@ -1,13 +1,22 @@
 import { handleActions } from 'redux-actions';
-import { ADD_SUCCESS, ADD_FAILED, GET_SUCCESS, GET_FAILED } from './constants';
+import {
+    ADD_SUCCESS,
+    ADD_FAILED,
+    GET_SUCCESS,
+    GET_FAILED,
+    PUBLISH_SUCCESS,
+    PUBLISH_FAILED
+} from './constants';
 
 const InitialState = {
     isAdded: false,
     isGet: false,
-    broadcasts: null
+    isPublished: false,
+    broadcasts: null,
+    broadcast: null,
 }
 
-const customer = handleActions(
+const broadcast = handleActions(
     {
         [GET_SUCCESS]: (state, { payload: data }) => ({
             ...state,
@@ -19,16 +28,25 @@ const customer = handleActions(
             broadcasts: null,
             isGet: false,
         }),
-        [ADD_SUCCESS]: (state) => ({
+        [ADD_SUCCESS]: (state, { payload: data }) => ({
             ...state,
+            broadcast: data,
             isAdded: true,
         }),
         [ADD_FAILED]: (state) => ({
             ...state,
             isAdded: false,
         }),
+        [PUBLISH_SUCCESS]: (state, { payload: data }) => ({
+            ...state,
+            isPublished: true,
+        }),
+        [PUBLISH_FAILED]: (state) => ({
+            ...state,
+            isPublished: false,
+        }),
     },
     InitialState
 );
 
-export default customer;
+export default broadcast;

@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const BroadcastDialog = ({ open, handleClose, broadcast }) => {
+const BroadcastDialog = ({ open, handleClose, broadcast, type }) => {
     const classes = useStyles();
 
     return (
@@ -49,7 +49,10 @@ const BroadcastDialog = ({ open, handleClose, broadcast }) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        OK
+                        Publish
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
                     </Button>
                 </DialogActions>
             </Dialog>

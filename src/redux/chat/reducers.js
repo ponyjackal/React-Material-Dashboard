@@ -6,7 +6,7 @@ const InitialState = {
     data: []
 }
 
-const dashboard = handleActions(
+const chat = handleActions(
     {
         [GET_SUCCESS]: (state, { payload: data }) => {
             const sorted = Object.keys(data.conversations).slice().sort((a, b) => {
@@ -36,4 +36,4 @@ const dashboard = handleActions(
     InitialState
 );
 
-export default dashboard;
+export default chat;

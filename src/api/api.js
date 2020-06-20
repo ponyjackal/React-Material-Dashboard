@@ -31,8 +31,8 @@ export const getCustomers = ({ rowPerPage, page }) =>
 export const addBroadcast = (broadcast) =>
     makeAPI().post('api/addBroadcast', broadcast)
 
-// export const getBroadcasts = () =>
-//     makeAPI().get('api/getBroadcasts')
+export const publishBroadcast = ({ id }) =>
+    makeAPI().post('api/publishBroadcast', { id })
 
 export const getBroadcasts = ({ type, rowPerPage, page }) =>
     makeAPI().post(`api/getBroadcasts?page=${page}`, { type, rowPerPage });

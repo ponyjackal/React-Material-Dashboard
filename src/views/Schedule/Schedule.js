@@ -1,5 +1,5 @@
 import 'date-fns';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/styles';
@@ -25,7 +25,8 @@ import csc from 'country-state-city';
 import states from './data';
 
 import useActions from './../../lib/useActions';
-import { addRequest } from './../../redux/broadcast/actions';
+import { addRequest, publishRequest } from './../../redux/broadcast/actions';
+import { PublishDialog } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,10 +55,32 @@ const ScheduleBroadcast = props => {
 
   const isLoading = useSelector(({ loading }) => loading.BROADCAST_ADD);
   const isAdded = useSelector(({ broadcast }) => broadcast.isAdded);
+  const current = useSelector(({ broadcast }) => broadcast.broadcast);
+  const isPublished = useSelector(({ broadcast }) => broadcast.isPublished);
+
   const [onAdd] = useActions(
     [addRequest],
     []
   );
+
+  const [onPublish] = useActions(
+    [publishRequest],
+    []
+  );
+
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handlePublish = () => {
+    if (current.id) {
+      onPublish({
+        id: current.id
+      });
+    }
+  }
 
   const [values, setValues] = useState({
     name: '',
@@ -71,11 +94,18 @@ const ScheduleBroadcast = props => {
     message: ''
   });
 
-  // useEffect(() => {
-  //   if (isAdded) {
-  //     history.push("/broadcasts");
-  //   }
-  // }, [isAdded]);
+  useEffect(() => {
+    if (isAdded) {
+      // history.push("/broadcasts");
+      setOpen(true);
+    }
+  }, [isAdded]);
+
+  useEffect(() => {
+    if (isPublished) {
+      setOpen(false);
+    }
+  }, [isPublished]);
 
   const handleChange = event => {
     setValues({
@@ -282,6 +312,7 @@ const ScheduleBroadcast = props => {
                 : <>Schedule</>}
             </Button>
           </CardActions>
+          <PublishDialog open={open} handleClose={handleClose} handlePublish={handlePublish} isPublished={isPublished} broadcast={current} />
         </form>
       </Card>
     </div>

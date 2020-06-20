@@ -11,7 +11,7 @@ import {
     CircularProgress
 } from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
-import DataTable from './../../../../components/DataTable';
+import { DataTable } from './../../../../components';
 import useActions from './../../../../lib/useActions';
 import { getRequest } from './../../../../redux/broadcast/actions';
 import BroadcastDialog from './../BroadcastDialog';

@@ -20,7 +20,7 @@ const InitialState = {
     data: []
 }
 
-const dashboard = handleActions(
+const message = handleActions(
     {
         [GET_SUCCESS]: (state, { payload: data }) => ({
             ...state,
@@ -68,4 +68,4 @@ const dashboard = handleActions(
     InitialState
 );
 
-export default dashboard;
+export default message;
