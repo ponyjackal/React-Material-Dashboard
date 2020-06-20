@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const PublishDialog = ({ open, handleClose, broadcast, handlePublish, isPublished }) => {
+const PublishDialog = ({ open, handleClose, broadcast, handlePublish, isPublishing }) => {
     const classes = useStyles();
 
     return (
@@ -65,7 +65,7 @@ const PublishDialog = ({ open, handleClose, broadcast, handlePublish, isPublishe
                         Cancel
                     </Button>
                     <Button onClick={handlePublish} className={classes.publishButton}>
-                        {isPublished
+                        {isPublishing
                             ? <CircularProgress color="inherit" size={26} />
                             : <>Publish</>}
                     </Button>

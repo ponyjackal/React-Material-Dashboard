@@ -16,7 +16,6 @@ import useActions from './../../../../lib/useActions';
 import { getRequest } from './../../../../redux/broadcast/actions';
 import BroadcastDialog from './../BroadcastDialog';
 
-
 const useStyles = makeStyles(theme => ({
     avatar: {
         marginRight: theme.spacing(2)

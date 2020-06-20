@@ -56,6 +56,7 @@ const ScheduleBroadcast = props => {
   const isLoading = useSelector(({ loading }) => loading.BROADCAST_ADD);
   const isAdded = useSelector(({ broadcast }) => broadcast.isAdded);
   const current = useSelector(({ broadcast }) => broadcast.broadcast);
+  const isPublishing = useSelector(({ loading }) => loading.BROADCAST_PUBLISH);
   const isPublished = useSelector(({ broadcast }) => broadcast.isPublished);
 
   const [onAdd] = useActions(
@@ -95,17 +96,18 @@ const ScheduleBroadcast = props => {
   });
 
   useEffect(() => {
-    if (isAdded) {
+    if (isAdded && !isLoading) {
       // history.push("/broadcasts");
       setOpen(true);
     }
-  }, [isAdded]);
+  }, [isAdded, isLoading]);
 
   useEffect(() => {
-    if (isPublished) {
+    console.log("isPublished", isPublished);
+    if (isPublished && !isPublishing) {
       setOpen(false);
     }
-  }, [isPublished]);
+  }, [isPublished, isPublishing]);
 
   const handleChange = event => {
     setValues({
@@ -312,7 +314,7 @@ const ScheduleBroadcast = props => {
                 : <>Schedule</>}
             </Button>
           </CardActions>
-          <PublishDialog open={open} handleClose={handleClose} handlePublish={handlePublish} isPublished={isPublished} broadcast={current} />
+          <PublishDialog open={open} handleClose={handleClose} handlePublish={handlePublish} isPublishing={isPublishing} broadcast={current} />
         </form>
       </Card>
     </div>

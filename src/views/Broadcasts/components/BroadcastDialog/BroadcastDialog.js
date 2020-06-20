@@ -1,11 +1,14 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import styled from 'styled-components';
+import {
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -20,40 +23,44 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const Bold = styled.p`
+    font-weight : bold
+`;
+
+const FlexDiv = styled.div`
+    display : flex
+`;
+
 const BroadcastDialog = ({ open, handleClose, broadcast }) => {
     const classes = useStyles();
 
     return (
         <div>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">{broadcast && broadcast.name}</DialogTitle>
-                <DialogContent className={classes.content}>
-                    <DialogContentText className={classes.contentText}>
-                        {broadcast && broadcast.message}
-                    </DialogContentText>
-                    {/* <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                    /> */}
-                    <p>Scheduled to Start @ {broadcast && broadcast.start_at}</p>
-                    <p>Published @ {broadcast && broadcast.published_at}</p>
-                    <p>List Size: {broadcast && broadcast.list_size}</p>
-                    <p>Approximate Cost: ${broadcast && broadcast.list_size * 75 / 10000}</p>
-                    <p>Not Sent Due To Unsubscribes: {broadcast && broadcast.blacklist_count}</p>
-                    <p>Not Sent Due To Duplicates: {broadcast && broadcast.duplicate_count}</p>
-                    <p>Not Sent Due To Invalid Record: {broadcast && broadcast.invalid_row_count}</p>
-                </DialogContent>
+                {broadcast && (
+                    <>
+                        <DialogTitle id="form-dialog-title">{broadcast.name}</DialogTitle>
+                        <DialogContent className={classes.content}>
+                            <DialogContentText className={classes.contentText}>
+                                {broadcast.message}
+                            </DialogContentText>
+                            <FlexDiv><p>Scheduled to Start @ </p><Bold>{broadcast.start_at}</Bold></FlexDiv>
+                            <FlexDiv><p>Published @ </p><Bold>{broadcast.published_at}</Bold></FlexDiv>
+                            <FlexDiv><p>List Size: </p><Bold>{broadcast.list_size}</Bold></FlexDiv>
+                            <FlexDiv><p>Approximate Cost: </p><Bold>${broadcast.list_size * 75 / 10000}</Bold></FlexDiv>
+                            <FlexDiv><p>Not Sent Due To Unsubscribes: </p><Bold>{broadcast.blacklist_count}</Bold></FlexDiv>
+                            <FlexDiv><p>Not Sent Due To Duplicates: </p><Bold>{broadcast.duplicate_count}</Bold></FlexDiv >
+                            <FlexDiv><p>Not Sent Due To Invalid Record: </p><Bold>{broadcast.invalid_row_count}</Bold></FlexDiv >
+                        </DialogContent >
+                    </>
+                )}
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         OK
                     </Button>
                 </DialogActions>
-            </Dialog>
-        </div>
+            </Dialog >
+        </div >
     );
 }
 
