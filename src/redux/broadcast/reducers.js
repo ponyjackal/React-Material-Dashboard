@@ -5,13 +5,16 @@ import {
     GET_SUCCESS,
     GET_FAILED,
     PUBLISH_SUCCESS,
-    PUBLISH_FAILED
+    PUBLISH_FAILED,
+    ARCHIVE_SUCCESS,
+    ARCHIVE_FAILED
 } from './constants';
 
 const InitialState = {
     isAdded: false,
     isGet: false,
     isPublished: false,
+    isArchived: false,
     broadcasts: null,
     broadcast: null,
 }
@@ -44,6 +47,14 @@ const broadcast = handleActions(
         [PUBLISH_FAILED]: (state) => ({
             ...state,
             isPublished: false,
+        }),
+        [ARCHIVE_SUCCESS]: (state, { payload: data }) => ({
+            ...state,
+            isArchived: true,
+        }),
+        [ARCHIVE_FAILED]: (state) => ({
+            ...state,
+            isArchived: false,
         }),
     },
     InitialState

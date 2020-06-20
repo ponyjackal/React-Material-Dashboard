@@ -10,6 +10,11 @@ export const [PUBLISH_REQUEST, PUBLISH_SUCCESS, PUBLISH_FAILED] = createRequestA
     publishActionType
 );
 
+export const archiveActionType = 'BROADCAST_ARCHIVE';
+export const [ARCHIVE_REQUEST, ARCHIVE_SUCCESS, ARCHIVE_FAILED] = createRequestActionTypes(
+    archiveActionType
+);
+
 export const getActionType = 'BROADCAST_GET';
 export const [GET_REQUEST, GET_SUCCESS, GET_FAILED] = createRequestActionTypes(
     getActionType

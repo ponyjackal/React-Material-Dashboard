@@ -20,6 +20,16 @@ const useStyles = makeStyles(theme => ({
     },
     contentText: {
         fontSize: '24px',
+    },
+    dialogActions: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    publishButton: {
+        color: '#1976d2',
+    },
+    cancelButton: {
+        color: '#dc004e',
     }
 }));
 
@@ -31,7 +41,7 @@ const FlexDiv = styled.div`
     display : flex
 `;
 
-const BroadcastDialog = ({ open, handleClose, broadcast }) => {
+const BroadcastDialog = ({ open, handleClose, broadcast, isArchiving, isPublishing, handlePublish, handleArchive, type }) => {
     const classes = useStyles();
 
     return (
@@ -54,10 +64,38 @@ const BroadcastDialog = ({ open, handleClose, broadcast }) => {
                         </DialogContent >
                     </>
                 )}
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        OK
-                    </Button>
+                <DialogActions className={classes.dialogActions}>
+                    {
+                        type === "drafts"
+                            ? <>
+                                <Button onClick={handleArchive} className={classes.cancelButton}>
+                                    {isArchiving
+                                        ? <CircularProgress color="inherit" size={26} />
+                                        : <>Archive</>}
+                                </Button>
+                                <Button onClick={handlePublish} className={classes.publishButton}>
+                                    {isPublishing
+                                        ? <CircularProgress color="inherit" size={26} />
+                                        : <>Publish</>}
+                                </Button>
+                            </>
+                            : type === "archived"
+                                ? <>
+                                    <Button onClick={handleClose} className={classes.publishButton}>
+                                        Close
+                                    </Button>
+                                </>
+                                : <>
+                                    <Button onClick={handleArchive} className={classes.cancelButton}>
+                                        {isArchiving
+                                            ? <CircularProgress color="inherit" size={26} />
+                                            : <>Archive</>}
+                                    </Button>
+                                    <Button onClick={handleClose} className={classes.publishButton}>
+                                        Close
+                                    </Button>
+                                </>
+                    }
                 </DialogActions>
             </Dialog >
         </div >

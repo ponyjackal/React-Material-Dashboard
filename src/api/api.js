@@ -34,6 +34,9 @@ export const addBroadcast = (broadcast) =>
 export const publishBroadcast = ({ id }) =>
     makeAPI().post('api/publishBroadcast', { id })
 
+export const archiveBroadcast = ({ id }) =>
+    makeAPI().post('api/archiveBroadcast', { id })
+
 export const getBroadcasts = ({ type, rowPerPage, page }) =>
     makeAPI().post(`api/getBroadcasts?page=${page}`, { type, rowPerPage });
 

@@ -13,7 +13,7 @@ import {
 import MUIDataTable from 'mui-datatables';
 import { DataTable } from './../../../../components';
 import useActions from './../../../../lib/useActions';
-import { getRequest } from './../../../../redux/broadcast/actions';
+import { getRequest, publishRequest, archiveRequest } from './../../../../redux/broadcast/actions';
 import BroadcastDialog from './../BroadcastDialog';
 
 const useStyles = makeStyles(theme => ({
@@ -33,6 +33,12 @@ const BroadcastsTable = props => {
     const isLoading = useSelector(({ loading }) => loading.BROADCAST_GET);
     const isGet = useSelector(({ broadcast }) => broadcast.isGet);
     const broadcasts = useSelector(({ broadcast }) => broadcast.broadcasts);
+
+    const isPublishing = useSelector(({ loading }) => loading.BROADCAST_PUBLISH);
+    const isPublished = useSelector(({ broadcast }) => broadcast.isPublished);
+
+    const isArchiving = useSelector(({ loading }) => loading.BROADCAST_ARCHIVE);
+    const isArchived = useSelector(({ broadcast }) => broadcast.isArchived);
 
     const [selectedBroadcasts, setSelectedBroadcasts] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -56,13 +62,49 @@ const BroadcastsTable = props => {
         []
     );
 
+    const [onPublish] = useActions(
+        [publishRequest],
+        []
+    );
+
+    const [onArchive] = useActions(
+        [archiveRequest],
+        []
+    );
+
     const getBroadcasts = (type = "scheduled", rowPerPage = 10, page = 1) => {
         onGet({ type, rowPerPage, page });
+    }
+
+    const handlePublish = () => {
+        onPublish({
+            id: selectedRow
+        });
+    }
+
+    const handleArchive = () => {
+        onArchive({
+            id: selectedRow
+        });
     }
 
     useEffect(() => {
         getBroadcasts(type);
     }, []);
+
+    useEffect(() => {
+        if (isArchived && !isArchiving) {
+            // history.push("/broadcasts");
+            setOpen(false);
+        }
+    }, [isArchived, isArchiving]);
+
+    useEffect(() => {
+        console.log("isPublished", isPublished);
+        if (isPublished && !isPublishing) {
+            setOpen(false);
+        }
+    }, [isPublished, isPublishing]);
 
     const columns = [
         {
@@ -158,7 +200,16 @@ const BroadcastsTable = props => {
                                         handleSelectOne={handleSelectOne}
                                         handlePageChange={handlePageChange}
                                         handleRowsPerPageChange={handleRowsPerPageChange} />
-                                    <BroadcastDialog open={open} handleClose={handleClose} broadcast={broadcasts.data[selectedRow]} />
+                                    <BroadcastDialog
+                                        open={open}
+                                        handleClose={handleClose}
+                                        broadcast={broadcasts.data[selectedRow]}
+                                        isPublishing={isPublishing}
+                                        isArchiving={isArchiving}
+                                        handlePublish={handlePublish}
+                                        handleArchive={handleArchive}
+                                        type={type}
+                                    />
                                 </>
                                 : <div className={classes.loadingError}>
                                     <Typography variant="h1">Connection Error</Typography>
