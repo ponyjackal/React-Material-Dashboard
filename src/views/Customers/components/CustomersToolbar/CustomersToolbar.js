@@ -134,7 +134,7 @@ const CustomersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button >Add User</Button>
+        <Button >Add Customer</Button>
         <ReactFileReader handleFiles={handleUploadedFiles} fileTypes={'.csv'}>
           <Button
             className={classes.importButton}

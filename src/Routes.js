@@ -19,6 +19,7 @@ import {
   Broadcasts as BroadcastsView,
   Customers as CustomersView,
   Chat as ChatView,
+  AddCustomer as AddCustomerView
 } from './views';
 
 const Routes = () => {
@@ -106,6 +107,12 @@ const Routes = () => {
         exact
         layout={MinimalLayout}
         path="/sign-in"
+      />
+      <RouteWithLayout
+        component={AddCustomerView}
+        exact
+        layout={MinimalLayout}
+        path="/subscribe"
       />
       <RouteWithLayout
         component={NotFoundView}

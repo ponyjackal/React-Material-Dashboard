@@ -1,5 +1,6 @@
 export { signin as signinAPI } from './api'
 export { importCustomers as importCustomersAPI } from './api'
+export { addCustomer as addCustomerAPI } from './api'
 export { getCustomers as getCustomersAPI } from './api'
 export { addBroadcast as addBroadcastAPI } from './api'
 export { publishBroadcast as publishBroadcastAPI } from './api'

@@ -25,6 +25,9 @@ export const signin = ({ email, password }) =>
 export const importCustomers = (customers) =>
     makeAPI().post('api/importCustomer', customers)
 
+export const addCustomer = (customer) =>
+    makeAPI().post('api/addCustomer', customer)
+
 export const getCustomers = ({ rowPerPage, page }) =>
     makeAPI().post(`api/getCustomers?page=${page}`, { rowPerPage });
 

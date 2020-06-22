@@ -1,9 +1,17 @@
 import { handleActions } from 'redux-actions';
-import { IMPORT_SUCCESS, IMPORT_FAILED, GET_SUCCESS, GET_FAILED } from './constants';
+import {
+    IMPORT_SUCCESS,
+    IMPORT_FAILED,
+    GET_SUCCESS,
+    GET_FAILED,
+    ADD_SUCCESS,
+    ADD_FAILED
+} from './constants';
 
 const InitialState = {
     isImported: false,
     isGet: false,
+    isAdded: false,
     customers: null
 }
 
@@ -26,6 +34,14 @@ const customer = handleActions(
         [IMPORT_FAILED]: (state) => ({
             ...state,
             isImported: false,
+        }),
+        [ADD_SUCCESS]: (state) => ({
+            ...state,
+            isAdded: true,
+        }),
+        [ADD_FAILED]: (state) => ({
+            ...state,
+            isAdded: false,
         }),
     },
     InitialState
