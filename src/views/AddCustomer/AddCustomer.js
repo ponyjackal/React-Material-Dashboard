@@ -271,180 +271,211 @@ const AddCustomer = props => {
               </IconButton> */}
             </div>
             <div className={classes.contentBody}>
-              <form
-                className={classes.form}
-                onSubmit={handleSubscribe}
-              >
-                <Typography
-                  className={classes.title}
-                  variant="h2"
+              {!isAdded ?
+                <form
+                  className={classes.form}
+                  onSubmit={handleSubscribe}
                 >
-                  GET TEXT MESSAGE UPDATES FROM THE FRUIT TRUCK
-                </Typography>
-                <Typography
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  When you're dealing with fresh fruit, you're also dealing with Mother Nature. This means that there will be times when we have to adjust our delivery schedule. Join our text message list for news and updates about deliveries in your community.
-                </Typography>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
+                  <Typography
+                    className={classes.title}
+                    variant="h2"
                   >
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('firstname')}
-                      fullWidth
-                      helperText={
-                        hasError('firstname') ? formState.errors.firstname[0] : null
-                      }
-                      label="First Name"
-                      name="firstname"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.firstname || ''}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
+                    GET TEXT MESSAGE UPDATES FROM THE FRUIT TRUCK
+                  </Typography>
+                  <Typography
+                    color="textSecondary"
+                    gutterBottom
                   >
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('lastname')}
-                      fullWidth
-                      helperText={
-                        hasError('lastname') ? formState.errors.lastname[0] : null
-                      }
-                      label="Last Name"
-                      name="lastname"
-                      onChange={handleChange}
-                      type="lastname"
-                      value={formState.values.lastname || ''}
-                      variant="outlined"
-                    />
-                  </Grid>
+                    When you're dealing with fresh fruit, you're also dealing with Mother Nature.
+                    This means that there will be times when we have to adjust our delivery schedule.
+                    Join our text message list for news and updates about deliveries in your community.
+                  </Typography>
                   <Grid
-                    item
-                    md={6}
-                    xs={12}
+                    container
+                    spacing={3}
                   >
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('phone')}
-                      fullWidth
-                      helperText={
-                        hasError('phone') ? formState.errors.phone[0] : null
-                      }
-                      label="Phone (7015551212)"
-                      name="phone"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.phone || ''}
-                      variant="outlined"
-                    />
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        className={classes.textField}
+                        error={hasError('firstname')}
+                        fullWidth
+                        helperText={
+                          hasError('firstname') ? formState.errors.firstname[0] : null
+                        }
+                        label="First Name"
+                        name="firstname"
+                        onChange={handleChange}
+                        type="text"
+                        value={formState.values.firstname || ''}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        className={classes.textField}
+                        error={hasError('lastname')}
+                        fullWidth
+                        helperText={
+                          hasError('lastname') ? formState.errors.lastname[0] : null
+                        }
+                        label="Last Name"
+                        name="lastname"
+                        onChange={handleChange}
+                        type="lastname"
+                        value={formState.values.lastname || ''}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        className={classes.textField}
+                        error={hasError('phone')}
+                        fullWidth
+                        helperText={
+                          hasError('phone') ? formState.errors.phone[0] : null
+                        }
+                        label="Phone (Format:7015551212)"
+                        name="phone"
+                        onChange={handleChange}
+                        type="text"
+                        value={formState.values.phone || ''}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        className={classes.textField}
+                        error={hasError('email')}
+                        fullWidth
+                        helperText={
+                          hasError('email') ? formState.errors.email[0] : null
+                        }
+                        label="Email"
+                        name="email"
+                        onChange={handleChange}
+                        type="email"
+                        value={formState.values.email || ''}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        className={classes.textField}
+                        error={hasError('city')}
+                        fullWidth
+                        helperText={
+                          hasError('city') ? formState.errors.city[0] : null
+                        }
+                        label="Delivery City"
+                        name="city"
+                        onChange={handleChange}
+                        type="text"
+                        value={formState.values.city || ''}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={6}
+                      xs={12}
+                    >
+                      <TextField
+                        className={classes.textField}
+                        error={hasError('state')}
+                        fullWidth
+                        helperText={
+                          hasError('state') ? formState.errors.state[0] : null
+                        }
+                        label="Delivery State"
+                        name="state"
+                        onChange={handleChange}
+                        type="state"
+                        value={formState.values.state || ''}
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={12}
+                      xs={12}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={formState.values.isAgree || false}
+                            onChange={handleChange}
+                            name="isAgree"
+                            color="primary"
+                          />
+                        }
+                        label="I agree to the terms & conditions and 'opt in' to receive test messages from The Fruit Truck. "
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('email')}
-                      fullWidth
-                      helperText={
-                        hasError('email') ? formState.errors.email[0] : null
-                      }
-                      label="Email"
-                      name="email"
-                      onChange={handleChange}
-                      type="email"
-                      value={formState.values.email || ''}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('city')}
-                      fullWidth
-                      helperText={
-                        hasError('city') ? formState.errors.city[0] : null
-                      }
-                      label="City"
-                      name="city"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.city || ''}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={6}
-                    xs={12}
-                  >
-                    <TextField
-                      className={classes.textField}
-                      error={hasError('state')}
-                      fullWidth
-                      helperText={
-                        hasError('state') ? formState.errors.state[0] : null
-                      }
-                      label="State (SD)"
-                      name="state"
-                      onChange={handleChange}
-                      type="state"
-                      value={formState.values.state || ''}
-                      variant="outlined"
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={12}
-                    xs={12}
-                  >
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={formState.values.isAgree || false}
-                          onChange={handleChange}
-                          name="isAgree"
-                          color="primary"
-                        />
-                      }
-                      label="I agree to the terms & conditions and 'opt in' to receive test messages from The Fruit Truck. "
-                    />
-                  </Grid>
-                </Grid>
 
-
-                <Button
-                  className={classes.subscribeButton}
-                  color="primary"
-                  disabled={!formState.isValid}
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  variant="contained"
+                  <Button
+                    className={classes.subscribeButton}
+                    color="primary"
+                    disabled={!formState.isValid}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    {isAdding
+                      ? <CircularProgress color="inherit" size={26} />
+                      : <>Subscribe</>}
+                  </Button>
+                </form>
+                : <form
+                  className={classes.form}
+                  onSubmit={handleSubscribe}
                 >
-                  {isAdding
-                    ? <CircularProgress color="inherit" size={26} />
-                    : <>Subscribe</>}
+                  <Typography
+                    className={classes.title}
+                    variant="h2"
+                  >
+                    THANK YOU!
+                  </Typography>
+                  <Typography
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    You will now receive text message notifications from The Fruit Truck.
+                  </Typography>
+                  <Button
+                    className={classes.subscribeButton}
+                    color="primary"
+                    fullWidth
+                    size="large"
+                    variant="contained"
+                    onClick={() => {
+                      window.location = "https://www.myfruittruck.com/"
+                    }}
+                  >
+                    go to home
                 </Button>
-              </form>
+                </form>}
             </div>
           </div>
         </Grid>
