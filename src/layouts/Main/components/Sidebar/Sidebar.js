@@ -57,7 +57,7 @@ const Sidebar = props => {
       icon: <CastIcon />
     },
     {
-      title: 'Chat',
+      title: 'Messages',
       href: '/chat',
       icon: <QuestionAnswerIcon />
     },
