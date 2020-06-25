@@ -191,7 +191,6 @@ const AddCustomer = props => {
       errors: errors || {}
     }));
 
-    console.log(formState.errors);
   }, [formState.values]);
 
   const handleStateChange = (event, newValue) => {
