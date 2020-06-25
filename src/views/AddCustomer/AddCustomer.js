@@ -8,13 +8,15 @@ import {
   Grid,
   Button,
   TextField,
-  Link,
   Typography,
   CircularProgress,
   FormControlLabel,
   Checkbox
 } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import csc from 'country-state-city';
+import states from './data';
 import { addRequest } from './../../redux/customer/actions';
 import useActions from './../../lib/useActions';
 
@@ -47,15 +49,11 @@ const schema = {
   },
   city: {
     presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      maximum: 128
-    }
+
   },
   state: {
     presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      maximum: 2
-    }
+
   },
   isAgree: {
     equality: "true"
@@ -171,6 +169,12 @@ const AddCustomer = props => {
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
+      state: {
+        id: 0,
+        value: '',
+        label: ''
+      },
+      city: '',
       true: true,
       isAgree: false,
     },
@@ -190,16 +194,41 @@ const AddCustomer = props => {
     console.log(formState.errors);
   }, [formState.values]);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     history.push('/');
-  //     try {
-  //       localStorage.setItem('token', token);
-  //     } catch (e) {
-  //       console.log('localStorage is not working');
-  //     }
-  //   }
-  // }, [history, token]);
+  const handleStateChange = (event, newValue) => {
+
+    const state = newValue ? newValue : {
+      id: '',
+      value: '',
+      label: ''
+    };
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        state: state,
+        city: ''
+      },
+      touched: {
+        ...formState.touched,
+        state: true
+      }
+    }));
+  }
+
+  const handleCityChange = (event, newValue) => {
+    const city = newValue ? newValue : "";
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        city: city
+      },
+      touched: {
+        ...formState.touched,
+        city: true
+      }
+    }));
+  }
 
   const handleChange = event => {
     event.persist();
@@ -228,7 +257,7 @@ const AddCustomer = props => {
       last_name: formState.values.lastname,
       email: formState.values.email,
       phone_number: formState.values.phone,
-      state: formState.values.state,
+      state: formState.values.state.value,
       city: formState.values.city,
     });
   };
@@ -379,19 +408,23 @@ const AddCustomer = props => {
                       md={6}
                       xs={12}
                     >
-                      <TextField
-                        className={classes.textField}
-                        error={hasError('city')}
-                        fullWidth
-                        helperText={
-                          hasError('city') ? formState.errors.city[0] : null
-                        }
-                        label="Delivery City"
-                        name="city"
-                        onChange={handleChange}
-                        type="text"
-                        value={formState.values.city || ''}
-                        variant="outlined"
+                      <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        options={states}
+                        getOptionLabel={(option) => option.label}
+                        value={formState.values.state}
+                        onChange={handleStateChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="State"
+                            margin="normal"
+                            variant="outlined"
+                            className={classes.options}
+                            InputProps={{ ...params.InputProps, type: 'search' }}
+                          />
+                        )}
                       />
                     </Grid>
                     <Grid
@@ -399,19 +432,22 @@ const AddCustomer = props => {
                       md={6}
                       xs={12}
                     >
-                      <TextField
-                        className={classes.textField}
-                        error={hasError('state')}
-                        fullWidth
-                        helperText={
-                          hasError('state') ? formState.errors.state[0] : null
-                        }
-                        label="Delivery State"
-                        name="state"
-                        onChange={handleChange}
-                        type="state"
-                        value={formState.values.state || ''}
-                        variant="outlined"
+                      <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        options={csc.getCitiesOfState(formState.values.state.id).map((option) => option.name)}
+                        value={formState.values.city}
+                        onChange={handleCityChange}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="City"
+                            className={classes.options}
+                            margin="normal"
+                            variant="outlined"
+                            InputProps={{ ...params.InputProps, type: 'search' }}
+                          />
+                        )}
                       />
                     </Grid>
                     <Grid

@@ -195,7 +195,7 @@ const ScheduleBroadcast = props => {
   }
 
   const handleCityChange = (event, newValue) => {
-    const city = newValue ? newValue : "";
+    const city = newValue ? newValue : [];
     setFormState(formState => ({
       ...formState,
       values: {
