@@ -53,7 +53,9 @@ const PublishDialog = ({ open, handleClose, broadcast, handlePublish, isPublishi
                             <DialogContentText className={classes.contentText}>
                                 {broadcast.message}
                             </DialogContentText>
-                            <FlexDiv><p>Scheduled to Start @</p> <Bold>{Math.floor(broadcast.duration / 86400)} days {Math.floor((broadcast.duration % 86400) / 3600)} hours {Math.floor((broadcast.duration % 3600) / 60)} mins {broadcast.duration % 60} secs later</Bold></FlexDiv>
+                            <FlexDiv><p>Scheduled to Start @</p> <Bold>{Math.floor(Math.abs(broadcast.duration) / 1440)} days {Math.floor((Math.abs(broadcast.duration) % 1440) / 60)} hours {Math.abs(broadcast.duration) % 60} mins {broadcast.duration > 0 ? "later" : "ago"}</Bold></FlexDiv>
+                            <FlexDiv><p>Target State: </p><Bold>{broadcast.target_state}</Bold></FlexDiv>
+                            <FlexDiv><p>Target City: </p><Bold>{broadcast.target_city}</Bold></FlexDiv>
                             <FlexDiv><p>List Size: </p><Bold>{broadcast.list_size}</Bold></FlexDiv>
                             <FlexDiv><p>Approximate Cost: </p><Bold>${broadcast.list_size * 75 / 10000}</Bold></FlexDiv>
                         </DialogContent>

@@ -1,6 +1,7 @@
 import 'date-fns';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import validate from 'validate.js';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -49,6 +50,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const schema = {
+  name: {
+    presence: { allowEmpty: false, message: 'is required' },
+  },
+  message: {
+    presence: { allowEmpty: false, message: 'is required' },
+  }
+};
+
 const ScheduleBroadcast = props => {
   const { history } = props;
   const classes = useStyles();
@@ -58,6 +68,35 @@ const ScheduleBroadcast = props => {
   const current = useSelector(({ broadcast }) => broadcast.broadcast);
   const isPublishing = useSelector(({ loading }) => loading.BROADCAST_PUBLISH);
   const isPublished = useSelector(({ broadcast }) => broadcast.isPublished);
+
+  const [open, setOpen] = useState(false);
+  const [formState, setFormState] = useState({
+    isValid: false,
+    values: {
+      name: '',
+      dateTime: new Date(),
+      state: {
+        id: 0,
+        value: '',
+        label: ''
+      },
+      city: [],
+      message: ''
+    },
+    touched: {},
+    errors: {}
+  });
+  // const [values, setValues] = useState({
+  //   name: '',
+  //   dateTime: new Date(),
+  //   state: {
+  //     id: 0,
+  //     value: '',
+  //     label: ''
+  //   },
+  //   city: [],
+  //   message: ''
+  // });
 
   const [onAdd] = useActions(
     [addRequest],
@@ -69,31 +108,6 @@ const ScheduleBroadcast = props => {
     []
   );
 
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handlePublish = () => {
-    if (current.id) {
-      onPublish({
-        id: current.id
-      });
-    }
-  }
-
-  const [values, setValues] = useState({
-    name: '',
-    dateTime: new Date(),
-    state: {
-      id: 0,
-      value: '',
-      label: ''
-    },
-    city: '',
-    message: ''
-  });
 
   useEffect(() => {
     if (isAdded && !isLoading) {
@@ -109,17 +123,54 @@ const ScheduleBroadcast = props => {
     }
   }, [isPublished, isPublishing]);
 
+  useEffect(() => {
+    const errors = validate(formState.values, schema);
+
+    setFormState(formState => ({
+      ...formState,
+      isValid: errors ? false : true,
+      errors: errors || {}
+    }));
+  }, [formState.values]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handlePublish = () => {
+    if (current.id) {
+      onPublish({
+        id: current.id
+      });
+    }
+  }
+
   const handleChange = event => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+    event.persist();
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [event.target.name]: event.target.value
+      },
+      touched: {
+        ...formState.touched,
+        [event.target.name]: true
+      }
+    }));
   };
   const handleDateChange = (date) => {
-    setValues({
-      ...values,
-      dateTime: date
-    });
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        dateTime: date
+      },
+      touched: {
+        ...formState.touched,
+        dateTime: true
+      }
+    }));
   };
 
   const handleStateChange = (event, newValue) => {
@@ -129,30 +180,45 @@ const ScheduleBroadcast = props => {
       value: '',
       label: ''
     };
-
-    setValues({
-      ...values,
-      state: state
-    });
-
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        state: state,
+        city: []
+      },
+      touched: {
+        ...formState.touched,
+        state: true
+      }
+    }));
   }
 
   const handleCityChange = (event, newValue) => {
     const city = newValue ? newValue : "";
-    setValues({
-      ...values,
-      city: city
-    });
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        city: city
+      },
+      touched: {
+        ...formState.touched,
+        city: true
+      }
+    }));
   }
 
-  const handleSubmit = () => {
-
-    console.log(values);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formState.values);
     onAdd({
-      ...values,
-      state: values.state.value
+      ...formState.values,
+      state: formState.values.state.value
     });
   }
+  const hasError = field =>
+    formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
     <div className={classes.root}>
@@ -177,13 +243,17 @@ const ScheduleBroadcast = props => {
                 xs={12}
               >
                 <TextField
+                  error={hasError('name')}
                   fullWidth
+                  helperText={
+                    hasError('name') ? formState.errors.name[0] : null
+                  }
                   label="Name"
                   margin="normal"
                   name="name"
                   onChange={handleChange}
                   required
-                  value={values.name}
+                  value={formState.values.name}
                   variant="outlined"
                 />
               </Grid>
@@ -204,9 +274,10 @@ const ScheduleBroadcast = props => {
                         margin="normal"
                         variant="outlined"
                         id="date-picker-dialog"
-                        label="Date picker dialog"
+                        label="Date"
+                        disablePast={true}
                         format="MM/dd/yyyy"
-                        value={values.dateTime}
+                        value={formState.values.dateTime}
                         onChange={handleDateChange}
                         KeyboardButtonProps={{
                           'aria-label': 'change date',
@@ -223,8 +294,8 @@ const ScheduleBroadcast = props => {
                         margin="normal"
                         variant="outlined"
                         id="time-picker"
-                        label="Time picker"
-                        value={values.dateTime}
+                        label="Time"
+                        value={formState.values.dateTime}
                         onChange={handleDateChange}
                         KeyboardButtonProps={{
                           'aria-label': 'change time',
@@ -244,7 +315,7 @@ const ScheduleBroadcast = props => {
                   id="free-solo-2-demo"
                   options={states}
                   getOptionLabel={(option) => option.label}
-                  value={values.state}
+                  value={formState.values.state}
                   onChange={handleStateChange}
                   renderInput={(params) => (
                     <TextField
@@ -264,10 +335,10 @@ const ScheduleBroadcast = props => {
                 xs={12}
               >
                 <Autocomplete
-                  freeSolo
+                  multiple
                   id="free-solo-2-demo"
-                  options={csc.getCitiesOfState(values.state.id).map((option) => option.name)}
-                  value={values.city}
+                  options={csc.getCitiesOfState(formState.values.state.id).map((option) => option.name)}
+                  value={formState.values.city}
                   onChange={handleCityChange}
                   renderInput={(params) => (
                     <TextField
@@ -287,7 +358,11 @@ const ScheduleBroadcast = props => {
                 xs={12}
               >
                 <TextField
+                  error={hasError('message')}
                   fullWidth
+                  helperText={
+                    hasError('message') ? formState.errors.message[0] : null
+                  }
                   label="Message"
                   margin="normal"
                   name="message"
@@ -295,7 +370,7 @@ const ScheduleBroadcast = props => {
                   rows={4}
                   onChange={handleChange}
                   required
-                  value={values.messag}
+                  value={formState.values.messag}
                   variant="outlined"
                 />
               </Grid>
@@ -306,8 +381,9 @@ const ScheduleBroadcast = props => {
             <Button
               color="primary"
               variant="contained"
+              disabled={!formState.isValid}
               className={classes.scheduleButton}
-              onClick={() => handleSubmit()}
+              onClick={handleSubmit}
             >
               {isLoading
                 ? <CircularProgress color="inherit" size={26} />
