@@ -417,7 +417,7 @@ const AddCustomer = props => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="State"
+                            label="Delivery State"
                             margin="normal"
                             variant="outlined"
                             className={classes.options}
@@ -440,7 +440,7 @@ const AddCustomer = props => {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="City"
+                            label="Delivery City"
                             className={classes.options}
                             margin="normal"
                             variant="outlined"
