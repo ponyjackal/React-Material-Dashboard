@@ -211,10 +211,18 @@ const ScheduleBroadcast = props => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formState.values);
+    let dateTime = new Date();
+    if (dateTime > formState.values.dateTime) {
+      dateTime.setHours(dateTime.getHours(), dateTime.getMinutes() + 1, dateTime.getSeconds());
+    }
+    else {
+      dateTime = formState.values.dateTime;
+    }
+
     onAdd({
       ...formState.values,
-      state: formState.values.state.value
+      state: formState.values.state.value,
+      dateTime: dateTime
     });
   }
   const hasError = field =>
