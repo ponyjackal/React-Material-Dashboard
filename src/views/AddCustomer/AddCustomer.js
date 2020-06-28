@@ -16,7 +16,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import csc from 'country-state-city';
-import states from './data';
+import { states, cities } from './../../data';
 import { addRequest } from './../../redux/customer/actions';
 import useActions from './../../lib/useActions';
 
@@ -434,7 +434,8 @@ const AddCustomer = props => {
                       <Autocomplete
                         freeSolo
                         id="free-solo-2-demo"
-                        options={csc.getCitiesOfState(formState.values.state.id).map((option) => option.name)}
+                        options={formState.values.state ? cities[formState.values.state.label] : []}
+                        getOptionLabel={(option) => option}
                         value={formState.values.city}
                         onChange={handleCityChange}
                         renderInput={(params) => (

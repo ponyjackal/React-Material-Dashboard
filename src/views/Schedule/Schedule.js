@@ -23,7 +23,7 @@ import {
 } from '@material-ui/pickers';
 
 import csc from 'country-state-city';
-import states from './data';
+import { states, cities } from './../../data';
 
 import useActions from './../../lib/useActions';
 import { addRequest, publishRequest } from './../../redux/broadcast/actions';
@@ -345,7 +345,8 @@ const ScheduleBroadcast = props => {
                 <Autocomplete
                   multiple
                   id="free-solo-2-demo"
-                  options={csc.getCitiesOfState(formState.values.state.id).map((option) => option.name)}
+                  options={formState.values.state ? cities[formState.values.state.label] : []}
+                  getOptionLabel={(option) => option}
                   value={formState.values.city}
                   onChange={handleCityChange}
                   renderInput={(params) => (
