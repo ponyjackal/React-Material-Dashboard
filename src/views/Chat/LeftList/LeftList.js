@@ -114,11 +114,8 @@ const LeftList = ({ onSelect, onRemove, selectedChat, data, status, className, .
 
     const [search, setSearch] = useState('');
 
-    console.log("LeftList", selectedChat);
-
     const onChange = (event) => {
         const text = event.target.value;
-        console.log(event.target.value);
         setSearch(text);
     }
 

@@ -104,48 +104,41 @@ const Chat = () => {
         }
     }, [isGet, data]);
 
-    console.log("Chat", selectedChat);
-
     const onSelect = (index) => {
         if (status[index] == false) {
             onRead({
                 id: data[index].id
             });
         }
-        let tempStatus = status.map((value, key) => {
+        let tempStatus = status.map((value, key) => { // mark selected chat as  read
             return (index == key) ? true : value;
         });
         setStatus(tempStatus);
         setSelectedChat(index);
     }
 
-    const onRemove = (index) => {
-        let tempStatus = data.filter((value, key) => {
-            return key == index ? false : value;
-        });
-        console.log("remove ", tempStatus);
+    const onRemove = () => {
+
         if (selectedChat >= 0) {
             onArchive({
-                id: selectedChat,
+                id: data[selectedChat].id,
             });
         }
     }
 
     const handleSubmit = (text) => {
-        console.log("submit");
         if (selectedChat >= 0) {
             onSend({
-                id: selectedChat,
+                id: data[selectedChat].id,
                 message: text
             });
         }
     }
 
     const handleUnsubscribe = () => {
-        console.log("unsubscribe");
         if (selectedChat >= 0) {
             onUnsubscribe({
-                id: selectedChat,
+                id: data[selectedChat].id,
             });
         }
     }

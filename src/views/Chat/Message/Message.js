@@ -116,10 +116,7 @@ const Message = ({ data, selectedChat, handleSubmit, handleUnsubscribe }) => {
 
     useEffect(scrollToBottom, [selectedChat]);
 
-    console.log("Message", selectedChat);
-
     const handleChange = (event) => {
-        console.log(event.target.value);
         setText(event.target.value);
     }
 
