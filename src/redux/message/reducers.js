@@ -32,7 +32,7 @@ const message = handleActions(
             data: [],
             isGet: false,
         }),
-        [SEND_SUCCESS]: (state) => ({
+        [SEND_SUCCESS]: (state, { payload: data }) => ({
             ...state,
             isSent: true,
         }),

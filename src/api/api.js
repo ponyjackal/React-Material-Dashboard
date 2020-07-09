@@ -17,8 +17,6 @@ const makeAPI = () => {
     return API;
 }
 
-
-
 export const signin = ({ email, password }) =>
     makeAPI().post('api/auth/signin', { email, password });
 

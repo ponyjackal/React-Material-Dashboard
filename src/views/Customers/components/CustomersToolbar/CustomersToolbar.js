@@ -76,7 +76,7 @@ const CustomersToolbar = props => {
             let phone_number = elementRaw[phone_index] ? elementRaw[phone_index].replace(/\D/g, '') : "";
             let first_name = elementRaw[first_name_index] ? elementRaw[first_name_index].replace(/[^a-zA-Z]/g, '') : "";
             let last_name = elementRaw[last_name_index] ? elementRaw[last_name_index].replace(/[^a-zA-Z]/g, '') : "";
-            let city = elementRaw[city_index] ? elementRaw[city_index].replace(/[^a-zA-Z ]/g, '') : "";
+            let city = elementRaw[city_index] ? elementRaw[city_index].replace(/[^a-zA-Z\s]/g, '') : "";
             let state = elementRaw[state_index] ? elementRaw[state_index].replace(/[^a-zA-Z]/g, '') : "";
             if (phone_number.charAt(0) === 1) {
               phone_number = phone_number.substr(1);
