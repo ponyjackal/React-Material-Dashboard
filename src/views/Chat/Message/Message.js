@@ -114,7 +114,7 @@ const Message = ({ data, selectedChat, handleSubmit, handleUnsubscribe }) => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
-    useEffect(scrollToBottom, [selectedChat]);
+    useEffect(scrollToBottom, [selectedChat, data]);
 
     const handleChange = (event) => {
         setText(event.target.value);

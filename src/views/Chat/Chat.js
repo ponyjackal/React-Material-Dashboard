@@ -10,8 +10,8 @@ import {
 import LeftList from './LeftList';
 import Message from './Message';
 import useActions from './../../lib/useActions';
-import { getRequest } from './../../redux/chat/actions';
-import { sendRequest, unsubscribeRequest, archiveRequest, readRequest } from './../../redux/message/actions';
+import { getRequest, archiveRequest, sendRequest, unsubscribeRequest, readRequest } from './../../redux/chat/actions';
+// import { sendRequest, unsubscribeRequest, readRequest } from './../../redux/message/actions';
 const useStyles = makeStyles(theme => ({
     root: {
         padding: theme.spacing(3)
