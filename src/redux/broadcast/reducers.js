@@ -40,18 +40,44 @@ const broadcast = handleActions(
             ...state,
             isAdded: false,
         }),
-        [PUBLISH_SUCCESS]: (state, { payload: data }) => ({
-            ...state,
-            isPublished: true,
-        }),
+        [PUBLISH_SUCCESS]: (state, { payload: param }) => {
+            console.log(param);
+            const result = state.broadcasts.data.filter((broadcast) => {
+                return broadcast.id != param.broadcast_id;
+            });
+            const totalCount = state.total - 1;
+            console.log(result);
+            return {
+                ...state,
+                broadcasts: {
+                    ...state.broadcasts,
+                    data: result,
+                    total: totalCount
+                },
+                isPublished: true,
+            }
+        },
         [PUBLISH_FAILED]: (state) => ({
             ...state,
             isPublished: false,
         }),
-        [ARCHIVE_SUCCESS]: (state, { payload: data }) => ({
-            ...state,
-            isArchived: true,
-        }),
+        [ARCHIVE_SUCCESS]: (state, { payload: param }) => {
+            console.log(param);
+            const result = state.broadcasts.data.filter((broadcast) => {
+                return broadcast.id != param.broadcast_id;
+            });
+            const totalCount = state.total - 1;
+            console.log(result);
+            return {
+                ...state,
+                broadcasts: {
+                    ...state.broadcasts,
+                    data: result,
+                    total: totalCount
+                },
+                isArchived: true,
+            }
+        },
         [ARCHIVE_FAILED]: (state) => ({
             ...state,
             isArchived: false,
