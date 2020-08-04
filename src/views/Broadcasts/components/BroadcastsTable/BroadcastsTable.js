@@ -78,13 +78,13 @@ const BroadcastsTable = props => {
 
     const handlePublish = () => {
         onPublish({
-            id: selectedRow
+            id: broadcasts.data[selectedRow].id
         });
     }
 
     const handleArchive = () => {
         onArchive({
-            id: selectedRow
+            id: broadcasts.data[selectedRow].id
         });
     }
 
