@@ -26,8 +26,8 @@ export const importCustomers = (customers) =>
 export const addCustomer = (customer) =>
     makeAPI().post('api/addCustomer', customer)
 
-export const getCustomers = ({ rowPerPage, page }) =>
-    makeAPI().post(`api/getCustomers?page=${page}`, { rowPerPage });
+export const getCustomers = ({ targetState, targetCity, rowPerPage, page }) =>
+    makeAPI().post(`api/getCustomers?page=${page}`, { targetState, targetCity, rowPerPage });
 
 export const addBroadcast = (broadcast) =>
     makeAPI().post('api/addBroadcast', broadcast)

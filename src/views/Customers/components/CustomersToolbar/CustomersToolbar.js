@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
   Button,
-  CircularProgress
+  CircularProgress,
+  TextField,
+  Typography
 } from '@material-ui/core';
 import ReactFileReader from 'react-file-reader';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { states, cities } from './../../../../data';
 
 import useActions from './../../../../lib/useActions';
-import { importRequest } from './../../../../redux/customer/actions';
+import { importRequest, getRequest } from './../../../../redux/customer/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,6 +36,20 @@ const useStyles = makeStyles(theme => ({
   },
   searchInput: {
     marginRight: theme.spacing(1)
+  },
+  filterContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  filterItem: {
+    marginRight: 20,
+    minWidth: 200,
+  },
+  searchResult: {
+    fontSize: 20,
+    marginLeft: 20,
   }
 }));
 
@@ -46,10 +64,37 @@ const CustomersToolbar = props => {
   const { className, ...rest } = props;
 
   const isLoading = useSelector(({ loading }) => loading.CUSTOMER_IMPORT);
+  const isSearching = useSelector(({ loading }) => loading.CUSTOMER_GET);
+  const isGet = useSelector(({ customer }) => customer.isGet);
+  const customers = useSelector(({ customer }) => customer.customers);
   const [onImport] = useActions(
     [importRequest],
     []
   );
+
+  const [onGet] = useActions(
+    [getRequest],
+    []
+  );
+
+  const getCustomers = (targetState, targetCity, rowPerPage = 10, page = 1) => {
+    onGet({ targetState, targetCity, rowPerPage, page });
+  }
+
+  const [formState, setFormState] = useState({
+    isValid: false,
+    values: {
+      state: {
+        id: 0,
+        value: '',
+        label: ''
+      },
+      city: [],
+      message: ''
+    },
+    touched: {},
+    errors: {}
+  });
 
   /** 
    * Function to upload file
@@ -127,12 +172,104 @@ const CustomersToolbar = props => {
     }
     reader.readAsText(files[0]);
   }
+
+  const handleSubmit = () => {
+    getCustomers(formState.values.state.value, formState.values.city);
+  }
+
+  const handleStateChange = (event, newValue) => {
+
+    const state = newValue ? newValue : {
+      id: '',
+      value: '',
+      label: ''
+    };
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        state: state,
+        city: []
+      },
+      touched: {
+        ...formState.touched,
+        state: true
+      }
+    }));
+  }
+
+  const handleCityChange = (event, newValue) => {
+    const city = newValue ? newValue : [];
+    setFormState(formState => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        city: city
+      },
+      touched: {
+        ...formState.touched,
+        city: true
+      }
+    }));
+  }
+
   return (
     <div
       {...rest}
       className={clsx(classes.root, className)}
     >
       <div className={classes.row}>
+        <div className={classes.filterContainer}>
+          <Autocomplete
+            freeSolo
+            id="free-solo-2-demo"
+            options={states}
+            getOptionLabel={(option) => option.label}
+            value={formState.values.state}
+            onChange={handleStateChange}
+            className={classes.filterItem}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="State"
+                margin="normal"
+                variant="outlined"
+                className={classes.options}
+                InputProps={{ ...params.InputProps, type: 'search' }}
+              />
+            )}
+          />
+          <Autocomplete
+            multiple
+            id="free-solo-2-demo"
+            options={formState.values.state ? cities[formState.values.state.label] : []}
+            getOptionLabel={(option) => option}
+            value={formState.values.city}
+            onChange={handleCityChange}
+            className={classes.filterItem}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="City"
+                className={classes.options}
+                margin="normal"
+                variant="outlined"
+                InputProps={{ ...params.InputProps, type: 'search' }}
+              />
+            )}
+          />
+          <Button
+            className={classes.importButton}
+            color="primary"
+            variant="contained"
+            onClick={handleSubmit}
+          >{isSearching
+            ? <CircularProgress color="inherit" size={26} />
+            : <>Search</>}</Button>
+          {isGet
+            ? <Typography className={classes.searchResult}>{customers.total} customers</Typography>
+            : <></>}
+        </div>
         <span className={classes.spacer} />
         <Button >Add Customer</Button>
         <ReactFileReader handleFiles={handleUploadedFiles} fileTypes={'.csv'}>

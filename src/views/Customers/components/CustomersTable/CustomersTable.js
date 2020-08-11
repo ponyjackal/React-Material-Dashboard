@@ -82,8 +82,8 @@ const CustomersTable = props => {
     []
   );
 
-  const getCustomers = (rowPerPage = 10, page = 1) => {
-    onGet({ rowPerPage, page });
+  const getCustomers = (targetState = '', targetCity = [], rowPerPage = 10, page = 1) => {
+    onGet({ targetState, targetCity, rowPerPage, page });
   }
 
   useEffect(() => {
@@ -128,12 +128,12 @@ const CustomersTable = props => {
   };
 
   const handlePageChange = (event, page) => {
-    getCustomers(rowsPerPage, page + 1);
+    getCustomers('', [], rowsPerPage, page + 1);
     setPage(page);
   };
 
   const handleRowsPerPageChange = event => {
-    getCustomers(event.target.value);
+    getCustomers('', '', event.target.value);
     setRowsPerPage(event.target.value);
   };
 

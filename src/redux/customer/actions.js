@@ -20,6 +20,6 @@ export const addRequest = createAction(ADD_REQUEST, customer => customer);
 export const addSuccess = createAction(ADD_SUCCESS);
 export const addFailed = createAction(ADD_FAILED);
 
-export const getRequest = createAction(GET_REQUEST, ({ rowPerPage, page }) => ({ rowPerPage, page }));
+export const getRequest = createAction(GET_REQUEST, ({ targetState, targetCity, rowPerPage, page }) => ({ targetState, targetCity, rowPerPage, page }));
 export const getSuccess = createAction(GET_SUCCESS);
 export const getFailed = createAction(GET_FAILED);
