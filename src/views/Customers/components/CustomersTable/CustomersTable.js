@@ -7,6 +7,7 @@ import {
   Typography
 } from '@material-ui/core';
 
+import MUIDataTable from "mui-datatables";
 import DataTable from './../../../../components/DataTable';
 import useActions from './../../../../lib/useActions';
 import { getRequest } from './../../../../redux/customer/actions';
@@ -35,6 +36,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   }
 }));
+
+const options = {
+  filterType: 'checkbox',
+};
 
 const columns = [
   {
@@ -140,19 +145,27 @@ const CustomersTable = props => {
 
   if (isGet)
     return (
-      <DataTable
-        data={customers.data}
+      // <DataTable
+      //   data={customers.data}
+      //   columns={columns}
+      //   count={customers.total}
+      //   selectedData={selectedCustomers}
+      //   rowsPerPage={rowsPerPage}
+      //   rowsPerPageOptions={rowsPerPageOptions}
+      //   page={page}
+      //   handleRowClick={handleRowClick}
+      //   handleSelectAll={handleSelectAll}
+      //   handleSelectOne={handleSelectOne}
+      //   handlePageChange={handlePageChange}
+      //   handleRowsPerPageChange={handleRowsPerPageChange} />
+
+      <MUIDataTable
+        title={"Customer List"}
+        data={customers}
         columns={columns}
-        count={customers.total}
-        selectedData={selectedCustomers}
-        rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={rowsPerPageOptions}
-        page={page}
-        handleRowClick={handleRowClick}
-        handleSelectAll={handleSelectAll}
-        handleSelectOne={handleSelectOne}
-        handlePageChange={handlePageChange}
-        handleRowsPerPageChange={handleRowsPerPageChange} />
+        options={options}
+      />
+
     );
 
   else {
