@@ -14,3 +14,8 @@ export const getActionType = 'CUSTOMER_GET';
 export const [GET_REQUEST, GET_SUCCESS, GET_FAILED] = createRequestActionTypes(
     getActionType
 );
+
+export const getNumberActionType = 'PHONENUMBER_GET';
+export const [GET_NUMBER_REQUEST, GET_NUMBER_SUCCESS, GET_NUMBER_FAILED] = createRequestActionTypes(
+    getNumberActionType
+);

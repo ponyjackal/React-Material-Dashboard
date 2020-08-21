@@ -5,14 +5,17 @@ import {
     GET_SUCCESS,
     GET_FAILED,
     ADD_SUCCESS,
-    ADD_FAILED
+    ADD_FAILED,
+    GET_NUMBER_SUCCESS,
+    GET_NUMBER_FAILED,
 } from './constants';
 
 const InitialState = {
     isImported: false,
     isGet: false,
     isAdded: false,
-    customers: null
+    customers: null,
+    phoneNumbers: []
 }
 
 const customer = handleActions(
@@ -25,6 +28,16 @@ const customer = handleActions(
         [GET_FAILED]: (state) => ({
             ...state,
             customers: null,
+            isGet: false,
+        }),
+        [GET_NUMBER_SUCCESS]: (state, { payload: data }) => ({
+            ...state,
+            phoneNumbers: data.phones,
+            isGet: true
+        }),
+        [GET_NUMBER_FAILED]: (state) => ({
+            ...state,
+            phoneNumbers: null,
             isGet: false,
         }),
         [IMPORT_SUCCESS]: (state) => ({

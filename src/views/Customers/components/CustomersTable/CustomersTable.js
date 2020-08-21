@@ -145,26 +145,26 @@ const CustomersTable = props => {
 
   if (isGet)
     return (
-      // <DataTable
-      //   data={customers.data}
-      //   columns={columns}
-      //   count={customers.total}
-      //   selectedData={selectedCustomers}
-      //   rowsPerPage={rowsPerPage}
-      //   rowsPerPageOptions={rowsPerPageOptions}
-      //   page={page}
-      //   handleRowClick={handleRowClick}
-      //   handleSelectAll={handleSelectAll}
-      //   handleSelectOne={handleSelectOne}
-      //   handlePageChange={handlePageChange}
-      //   handleRowsPerPageChange={handleRowsPerPageChange} />
-
-      <MUIDataTable
-        title={"Customer List"}
-        data={customers}
+      <DataTable
+        data={customers.data}
         columns={columns}
-        options={options}
-      />
+        count={customers.total}
+        selectedData={selectedCustomers}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={rowsPerPageOptions}
+        page={page}
+        handleRowClick={handleRowClick}
+        handleSelectAll={handleSelectAll}
+        handleSelectOne={handleSelectOne}
+        handlePageChange={handlePageChange}
+        handleRowsPerPageChange={handleRowsPerPageChange} />
+
+      // <MUIDataTable
+      //   title={"Customer List"}
+      //   data={customers}
+      //   columns={columns}
+      //   options={options}
+      // />
 
     );
 

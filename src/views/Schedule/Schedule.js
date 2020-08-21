@@ -143,6 +143,7 @@ const ScheduleBroadcast = props => {
         id: current.id
       });
     }
+    setOpen(false);
   }
 
   const handleChange = event => {
