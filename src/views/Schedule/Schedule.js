@@ -108,6 +108,9 @@ const ScheduleBroadcast = props => {
     []
   );
 
+  useEffect(() => {
+    setOpen(false);
+  }, []);
 
   useEffect(() => {
     if (isAdded && !isLoading) {
