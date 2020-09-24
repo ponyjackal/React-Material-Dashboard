@@ -47,6 +47,9 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     paddingLeft: 20,
     paddingRight: 20,
+  },
+  textLength: {
+    float: 'right'
   }
 }));
 
@@ -70,6 +73,7 @@ const ScheduleBroadcast = props => {
   const isPublished = useSelector(({ broadcast }) => broadcast.isPublished);
 
   const [open, setOpen] = useState(false);
+  const [textLength, setTextLength] = useState(0);
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
@@ -162,6 +166,8 @@ const ScheduleBroadcast = props => {
         [event.target.name]: true
       }
     }));
+    setTextLength(event.target.value.length);
+    console.log("text length", event.target.value.length);
   };
   const handleDateChange = (date) => {
     setFormState(formState => ({
@@ -386,6 +392,7 @@ const ScheduleBroadcast = props => {
                   value={formState.values.messag}
                   variant="outlined"
                 />
+                <p className={classes.textLength}>{textLength} / 160 characters</p>
               </Grid>
             </Grid>
           </CardContent>
