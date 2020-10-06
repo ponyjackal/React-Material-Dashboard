@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
+import CountUp from 'react-countup';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,7 +65,7 @@ const Budget = props => {
             >
               TOTAL SPENT
             </Typography>
-            <Typography variant="h3">${totalCost}</Typography>
+            <Typography variant="h3">$<CountUp duration={2} end={totalCost} /></Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
@@ -78,7 +79,7 @@ const Budget = props => {
             className={classes.differenceValue}
             variant="body2"
           >
-            12%
+            <CountUp duration={2} end={12} />%
           </Typography>
           <Typography
             className={classes.caption}

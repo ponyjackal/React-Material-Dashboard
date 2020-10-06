@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import ReactFileReader from 'react-file-reader';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import CountUp from 'react-countup';
+
 import { states, cities } from './../../../../data';
 
 import useActions from './../../../../lib/useActions';
@@ -267,7 +269,7 @@ const CustomersToolbar = props => {
             ? <CircularProgress color="inherit" size={26} />
             : <>Search</>}</Button>
           {isGet
-            ? <Typography className={classes.searchResult}>{customers.total} customers</Typography>
+            ? <Typography className={classes.searchResult}><CountUp delay={2} end={customers.total} /> customers</Typography>
             : <></>}
         </div>
         <span className={classes.spacer} />

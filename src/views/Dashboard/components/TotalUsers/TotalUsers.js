@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import CountUp from 'react-countup';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,7 +66,7 @@ const TotalUsers = props => {
             >
               TOTAL CUSTOMERS
             </Typography>
-            <Typography variant="h3">{totalCustomer}</Typography>
+            <Typography variant="h3"><CountUp duration={2} end={totalCustomer} /></Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

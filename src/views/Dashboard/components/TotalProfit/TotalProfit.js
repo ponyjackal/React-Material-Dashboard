@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import CountUp from 'react-countup';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,8 +59,10 @@ const TotalProfit = props => {
             <Typography
               color="inherit"
               variant="h3"
-            >
-              {totalBoardcasts}
+            ><CountUp
+                duration={2}
+                end={totalBoardcasts}
+              />
             </Typography>
           </Grid>
           <Grid item>

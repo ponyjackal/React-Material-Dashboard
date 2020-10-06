@@ -11,6 +11,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import CountUp from 'react-countup';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,7 +63,7 @@ const TasksProgress = props => {
             >
               TASKS PROGRESS
             </Typography>
-            <Typography variant="h3">75.5%</Typography>
+            <Typography variant="h3"><CountUp duration={2} end={75} />%</Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>
