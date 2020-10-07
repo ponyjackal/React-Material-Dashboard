@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TotalProfit = props => {
-  const { className, totalBoardcasts, ...rest } = props;
+  const { className, totalCost, ...rest } = props;
 
   const classes = useStyles();
 
@@ -54,14 +54,14 @@ const TotalProfit = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL BROADCASTS
+              TOTAL SPENT
             </Typography>
             <Typography
               color="inherit"
               variant="h3"
             ><CountUp
                 duration={2}
-                end={totalBoardcasts}
+                end={totalCost}
               />
             </Typography>
           </Grid>

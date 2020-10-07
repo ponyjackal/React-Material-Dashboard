@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Budget = props => {
-  const { className, totalCost, ...rest } = props;
+  const { className, totalBroadcasts, ...rest } = props;
 
   const classes = useStyles();
 
@@ -63,9 +63,9 @@ const Budget = props => {
               gutterBottom
               variant="body2"
             >
-              TOTAL SPENT
+              TOTAL BROADCASTS
             </Typography>
-            <Typography variant="h3">$<CountUp duration={2} end={totalCost} /></Typography>
+            <Typography variant="h3"><CountUp duration={2} end={totalBroadcasts} /></Typography>
           </Grid>
           <Grid item>
             <Avatar className={classes.avatar}>

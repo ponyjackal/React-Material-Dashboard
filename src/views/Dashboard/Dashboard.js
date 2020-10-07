@@ -67,7 +67,83 @@ const Dashboard = () => {
     <div className={classes.root}>
       <div className={classes.content}>
         {isLoading
-          ? <CircularProgress color="primary" size={100} className={classes.loading} />
+          ? (<Grid
+            container
+            spacing={4}
+          >
+            <Grid
+              item
+              lg={6}
+              sm={6}
+              xl={6}
+              xs={12}
+            >
+              <Budget totalBroadcasts={1000} />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              sm={6}
+              xl={6}
+              xs={12}
+            >
+              <TotalUsers totalCustomer={100000} />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              sm={6}
+              xl={6}
+              xs={12}
+            >
+              <TasksProgress />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              sm={6}
+              xl={6}
+              xs={12}
+            >
+              <TotalProfit totalCost={200} />
+            </Grid>
+            {/* <Grid
+              item
+              lg={8}
+              md={12}
+              xl={9}
+              xs={12}
+            >
+              <LatestSales />
+            </Grid>
+            <Grid
+              item
+              lg={4}
+              md={6}
+              xl={3}
+              xs={12}
+            >
+              <UsersByDevice />
+            </Grid>
+            <Grid
+              item
+              lg={4}
+              md={6}
+              xl={3}
+              xs={12}
+            >
+              <LatestProducts />
+            </Grid>
+            <Grid
+              item
+              lg={8}
+              md={12}
+              xl={9}
+              xs={12}
+            >
+              <LatestOrders />
+            </Grid> */}
+          </Grid>)
           : isGet
             ? (<Grid
               container
@@ -80,7 +156,7 @@ const Dashboard = () => {
                 xl={6}
                 xs={12}
               >
-                <Budget totalCost={data.approx_cost} />
+                <Budget totalBroadcasts={data.broadcasts_count} />
               </Grid>
               <Grid
                 item
@@ -107,7 +183,7 @@ const Dashboard = () => {
                 xl={6}
                 xs={12}
               >
-                <TotalProfit totalBoardcasts={data.broadcasts_count} />
+                <TotalProfit totalCost={data.approx_cost} />
               </Grid>
               {/* <Grid
                 item

@@ -270,7 +270,8 @@ const CustomersToolbar = props => {
             : <>Search</>}</Button>
           {isSearching
             ? <Typography className={classes.searchResult}><CountUp delay={2} end={100000} /> customers</Typography>
-            : isGet ? <Typography className={classes.searchResult}><CountUp delay={2} end={customers.total} /> customers</Typography> : <></>}
+            : isGet ? <Typography className={classes.searchResult}><CountUp delay={2} end={customers.total} /> customers</Typography>
+              : <Typography className={classes.searchResult}><CountUp delay={2} end={100000} /> customers</Typography>}
         </div>
         <span className={classes.spacer} />
         <Button >Add Customer</Button>
