@@ -268,7 +268,7 @@ const CustomersToolbar = props => {
           >{isSearching
             ? <CircularProgress color="inherit" size={26} />
             : <>Search</>}</Button>
-          {isSearching
+          {isSearching && !isGet
             ? <Typography className={classes.searchResult}><CountUp delay={2} start={0} end={100000} /> customers</Typography>
             : isGet ? <Typography className={classes.searchResult}><CountUp delay={2} start={100000} end={customers.total} /> customers</Typography> : <></>}
         </div>
