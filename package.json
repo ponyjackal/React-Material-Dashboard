@@ -33,7 +33,7 @@
     "@material-ui/lab": "^4.0.0-alpha.54",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.2.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chart.js": "^2.8.0",
     "clsx": "^1.0.4",
     "country-state-city": "^1.0.4",
